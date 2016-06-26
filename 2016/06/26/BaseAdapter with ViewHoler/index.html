@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>BaseAdapter中使用ViewHolder | StupidL&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BaseAdapter中使用ViewHolder">
+<meta property="og:url" content="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/index.html">
+<meta property="og:site_name" content="StupidL's Blog">
+<meta property="og:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
+<meta property="og:updated_time" content="2016-06-26T10:25:56.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BaseAdapter中使用ViewHolder">
+<meta name="twitter:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
+  
+    <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StupidL&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stupidme.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-BaseAdapter with ViewHoler" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/26/BaseAdapter with ViewHoler/" class="article-date">
+  <time datetime="2016-06-26T10:10:30.000Z" itemprop="datePublished">2016-06-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      BaseAdapter中使用ViewHolder
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。<br>当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。<br>在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?<br><em>Talk is cheap, show me the code</em>  </p>
+<p>##不使用ViewHolder的例子：<br>    private class MyAdapter extends BaseAdapter{<br>    private List<map<string, string="">&gt; items;<br>    public MyAdapter(List<map<string, string="">&gt; list){<br>        this.items = list;<br>    }<br>    @Override<br>        public int getCount() {<br>            return items.size();<br>        }<br>        @Override<br>        public Object getItem(int i) {<br>            return items.get(i);<br>        }<br>        @Override<br>        public long getItemId(int i) {<br>            return i;<br>        }<br>        @Override<br>        public View getView(int position, View view, ViewGroup viewGroup) {<br>        view  = getLayoutInflater.inflate(R.layout.item,null);<br>        TextView text = (TextView) view.findViewById(R.id.text);<br>        Button button = (Button) view.findViewById(R.id.button);<br>        text.setText(“我是第”+position+”项”);<br>        button.setText(“我是第”+position+”个按钮”);<br>        return view;<br>    }<br>    }  </map<string,></map<string,></p>
+<p>##使用ViewHolder的例子：<br>    private class MyAdapter extends BaseAdapter{<br>        private List<map<string, string="">&gt; items;<br>        public MyAdapter(List<map<string, string="">&gt; list){<br>                this.items = list;<br>        }<br>        @Override<br>        public int getCount() {<br>            return items.size();<br>        }<br>        @Override<br>        public Object getItem(int i) {<br>            return items.get(i);<br>        }<br>        @Override<br>        public long getItemId(int i) {<br>            return i;<br>        }<br>        @Override<br>        public View getView(int position, View view, ViewGroup viewGroup) {<br>        ViewHolder viewHolder = new ViewHolder();<br>        if(view == null){<br>                    view  = getLayoutInflater.inflate(R.layout.item,null);<br>                    viewHolder.text = (TextView) view.findViewById(R.id.text);<br>                    viewHolder.button = (Button) view.findViewById(R.id.button);<br>                    viewHolder.text.setText(“我是第”+position+”项”);<br>                    viewHolder.button.setText(“我是第”+position+”个按钮”);<br>                    view.setTag(viewholder);<br>        }else{<br>            viewHolder = view.getTag();<br>        }<br>        return view;<br>        }<br>        private final class ViewHolder{<br>            public TextView text;<br>            public Button button;<br>        }<br>    }  </map<string,></map<string,></p>
+<p>就是这么简单！希望能对初学者有点帮助！<br>本人学识疏浅，错误之处请帮忙指出，不胜感激！<br>email: luozhouyang0528@gmail.com</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="cipwga4wa0000jm0wh4u6h8kq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/26/vim-with-markdown/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vim with markdown</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/26/BaseAdapter with ViewHoler/">BaseAdapter中使用ViewHolder</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/vim-with-markdown/">vim with markdown</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 StupidL<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
