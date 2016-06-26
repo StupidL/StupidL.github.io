@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/index.html">
 <meta property="og:site_name" content="StupidL's Blog">
 <meta property="og:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
-<meta property="og:updated_time" content="2016-06-26T10:35:40.765Z">
+<meta property="og:updated_time" content="2016-06-26T16:36:00.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BaseAdapter中使用ViewHolder">
 <meta name="twitter:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
@@ -86,8 +86,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。<br>当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。<br>在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?<br><em>Talk is cheap, show me the code</em>  </p>
-<p>##不使用ViewHolder的例子：  </p>
-<pre><code class="bash">private class MyAdapter extends BaseAdapter{
+<h2 id="不使用ViewHolder的例子："><a href="#不使用ViewHolder的例子：" class="headerlink" title="不使用ViewHolder的例子："></a>不使用ViewHolder的例子：</h2><pre><code class="bash">private class MyAdapter extends BaseAdapter{
     private List&lt;Map&lt;String, String&gt;&gt; items;
     public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
         this.items = list;
@@ -115,8 +114,7 @@
     }
 }
 </code></pre>
-<p>##使用ViewHolder的例子：  </p>
-<pre><code class="bash">private class MyAdapter extends BaseAdapter{
+<h2 id="使用ViewHolder的例子："><a href="#使用ViewHolder的例子：" class="headerlink" title="使用ViewHolder的例子："></a>使用ViewHolder的例子：</h2><pre><code class="bash">private class MyAdapter extends BaseAdapter{
     private List&lt;Map&lt;String, String&gt;&gt; items;
     public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
             this.items = list;
@@ -159,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="cipwga4wa0000jm0wh4u6h8kq" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="cipwthz8o0000h30wj5tdq3n9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -169,6 +167,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/06/26/Handler/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vim with markdown
+        
+      </div>
+    </a>
   
   
     <a href="/2016/06/26/vim-with-markdown/" id="article-nav-older" class="article-nav-link-wrap">
@@ -202,7 +209,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
     </div>
   </div>
 
@@ -222,6 +229,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/06/26/Handler/">vim with markdown</a>
+          </li>
         
           <li>
             <a href="/2016/06/26/BaseAdapter with ViewHoler/">BaseAdapter中使用ViewHolder</a>
