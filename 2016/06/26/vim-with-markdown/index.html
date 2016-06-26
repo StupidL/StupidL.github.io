@@ -7,20 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="How to install vimI am using Ubuntu Linux. So I’ll show you how to install vim on Ubuntu:  
 12$ sudo apt-get install vim$ sudo apt install vim
-the former is used before Ubuntu16.04, and later is used">
+The former is used before Ubuntu16.04, and later is used">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vim with markdown">
 <meta property="og:url" content="http://stupidme.me/2016/06/26/vim-with-markdown/index.html">
 <meta property="og:site_name" content="StupidL's Blog">
 <meta property="og:description" content="How to install vimI am using Ubuntu Linux. So I’ll show you how to install vim on Ubuntu:  
 12$ sudo apt-get install vim$ sudo apt install vim
-the former is used before Ubuntu16.04, and later is used">
-<meta property="og:updated_time" content="2016-06-26T05:59:58.509Z">
+The former is used before Ubuntu16.04, and later is used">
+<meta property="og:updated_time" content="2016-06-26T06:01:47.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vim with markdown">
 <meta name="twitter:description" content="How to install vimI am using Ubuntu Linux. So I’ll show you how to install vim on Ubuntu:  
 12$ sudo apt-get install vim$ sudo apt install vim
-the former is used before Ubuntu16.04, and later is used">
+The former is used before Ubuntu16.04, and later is used">
   
     <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
   
@@ -93,15 +93,15 @@ the former is used before Ubuntu16.04, and later is used">
       
         <h3 id="How-to-install-vim"><a href="#How-to-install-vim" class="headerlink" title="How to install vim"></a>How to install vim</h3><p>I am using Ubuntu Linux. So I’ll show you how to install vim on Ubuntu:  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install vim</span><br><span class="line">$ sudo apt install vim</span><br></pre></td></tr></table></figure>
-<p>the former is used before Ubuntu16.04, and later is used only if you are using Ubuntu 16.04 version.<br>If you want to use vim with GUI, you can do as this:  </p>
+<p>The former is used before Ubuntu16.04, and later is used only if you are using Ubuntu 16.04 version.<br>If you want to use vim with GUI, you can do as this:  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install vim-gtk  </span><br><span class="line">$ sudo apt install vim-gnome</span><br></pre></td></tr></table></figure>
-<p>whichever you choose, you are now getting a vim with GUI.<br>You should find out how to use vim, and the commonds are useful and important. Keep them in your mind!  </p>
+<p>Whichever you choose, you are now getting a vim with GUI.<br>You should find out how to use vim, and the commonds are useful and important. Keep them in your mind!  </p>
 <h3 id="How-to-apply-a-markdown-plugin-to-vim"><a href="#How-to-apply-a-markdown-plugin-to-vim" class="headerlink" title="How to apply a markdown plugin to vim"></a>How to apply a markdown plugin to vim</h3><p>You should make a directory if them does not exist in users directory:  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /home/stupidl/.vim/  </span><br><span class="line">$ <span class="built_in">cd</span> ~/.vim/  </span><br><span class="line">$ mkdir syntax  </span><br><span class="line">$ mkdir ftdetect</span><br></pre></td></tr></table></figure>
-<p><em>stupidl</em> is my user name. You need to change it to yours.<br>and then you should find a plugin. For example you find a plguin in github, you need to dwonload it first, and then unzip the file.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/plasticboy/vim-markdown.git </span><br><span class="line">$ tar -zxvf downloadfile.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>next, you need copy some files to your directory:  </p>
+<p><em>stupidl</em> is my user name. You need to change it to yours.<br>And then you should find a plugin. For example you find a plguin in github, you need to dwonload it first, and then unzip the file.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/plasticboy/vim-markdown.git </span><br><span class="line">$ tar -zxvf downloadfile.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>Next, you need copy some files to your directory:  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cp ./syntax/markdown.vim ~/.vim/syntax/  </span><br><span class="line">$ cp ./fedetect/markdown.vim ~/.vim/fedetect/</span><br></pre></td></tr></table></figure>
-<p>Congratulations! You are about finishing it!<br>restart vim and you can enjoy yourself with vim now!</p>
+<p>Congratulations! You are about finishing it!<br>Restart vim and you can enjoy yourself with vim now!</p>
 
       
     </div>
