@@ -89,11 +89,11 @@
         <p>BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。<br>当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。<br>在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?<br><em>Talk is cheap, show me the code</em>  </p>
 <p>##不使用ViewHolder的例子：  </p>
 <pre><code class="bash">private class MyAdapter extends BaseAdapter{
-private List&lt;Map&lt;String, String&gt;&gt; items;
-public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
-    this.items = list;
-}
-@Override
+    private List&lt;Map&lt;String, String&gt;&gt; items;
+    public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
+        this.items = list;
+    }
+    @Override
     public int <span class="function"><span class="title">getCount</span></span>() {
         <span class="built_in">return</span> items.size();
     }
@@ -138,15 +138,16 @@ public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
     public View getView(int position, View view, ViewGroup viewGroup) {
     ViewHolder viewHolder = new ViewHolder();
     <span class="keyword">if</span>(view == null){
-                view  = getLayoutInflater.inflate(R.layout.item,null);
-                viewHolder.text = (TextView) view.findViewById(R.id.text);
-                viewHolder.button = (Button) view.findViewById(R.id.button);
-                viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
-                viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
-                view.setTag(viewholder);
+        view  = getLayoutInflater.inflate(R.layout.item,null);
+        viewHolder.text = (TextView) view.findViewById(R.id.text);
+        viewHolder.button = (Button) view.findViewById(R.id.button);
+
+         view.setTag(viewholder);
     }<span class="keyword">else</span>{
         viewHolder = view.getTag();
     }
+    viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+    viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
     <span class="built_in">return</span> view;
     }
     private final class ViewHolder{
