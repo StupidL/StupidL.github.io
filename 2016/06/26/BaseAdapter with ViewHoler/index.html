@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/index.html">
 <meta property="og:site_name" content="StupidL's Blog">
 <meta property="og:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
-<meta property="og:updated_time" content="2016-06-26T10:25:56.356Z">
+<meta property="og:updated_time" content="2016-06-26T10:28:56.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BaseAdapter中使用ViewHolder">
 <meta name="twitter:description" content="BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?Talk is cheap, show me the cod">
@@ -86,8 +86,74 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。<br>当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。<br>在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?<br><em>Talk is cheap, show me the code</em>  </p>
-<p>##不使用ViewHolder的例子：<br>    private class MyAdapter extends BaseAdapter{<br>    private List<map<string, string="">&gt; items;<br>    public MyAdapter(List<map<string, string="">&gt; list){<br>        this.items = list;<br>    }<br>    @Override<br>        public int getCount() {<br>            return items.size();<br>        }<br>        @Override<br>        public Object getItem(int i) {<br>            return items.get(i);<br>        }<br>        @Override<br>        public long getItemId(int i) {<br>            return i;<br>        }<br>        @Override<br>        public View getView(int position, View view, ViewGroup viewGroup) {<br>        view  = getLayoutInflater.inflate(R.layout.item,null);<br>        TextView text = (TextView) view.findViewById(R.id.text);<br>        Button button = (Button) view.findViewById(R.id.button);<br>        text.setText(“我是第”+position+”项”);<br>        button.setText(“我是第”+position+”个按钮”);<br>        return view;<br>    }<br>    }  </map<string,></map<string,></p>
-<p>##使用ViewHolder的例子：<br>    private class MyAdapter extends BaseAdapter{<br>        private List<map<string, string="">&gt; items;<br>        public MyAdapter(List<map<string, string="">&gt; list){<br>                this.items = list;<br>        }<br>        @Override<br>        public int getCount() {<br>            return items.size();<br>        }<br>        @Override<br>        public Object getItem(int i) {<br>            return items.get(i);<br>        }<br>        @Override<br>        public long getItemId(int i) {<br>            return i;<br>        }<br>        @Override<br>        public View getView(int position, View view, ViewGroup viewGroup) {<br>        ViewHolder viewHolder = new ViewHolder();<br>        if(view == null){<br>                    view  = getLayoutInflater.inflate(R.layout.item,null);<br>                    viewHolder.text = (TextView) view.findViewById(R.id.text);<br>                    viewHolder.button = (Button) view.findViewById(R.id.button);<br>                    viewHolder.text.setText(“我是第”+position+”项”);<br>                    viewHolder.button.setText(“我是第”+position+”个按钮”);<br>                    view.setTag(viewholder);<br>        }else{<br>            viewHolder = view.getTag();<br>        }<br>        return view;<br>        }<br>        private final class ViewHolder{<br>            public TextView text;<br>            public Button button;<br>        }<br>    }  </map<string,></map<string,></p>
+<p>##不使用ViewHolder的例子：  </p>
+<pre><code class="bash">private class MyAdapter extends BaseAdapter{
+private List&lt;Map&lt;String, String&gt;&gt; items;
+public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
+    this.items = list;
+}
+@Override
+    public int <span class="function"><span class="title">getCount</span></span>() {
+        <span class="built_in">return</span> items.size();
+    }
+    @Override
+    public Object getItem(int i) {
+        <span class="built_in">return</span> items.get(i);
+    }
+    @Override
+    public long getItemId(int i) {
+        <span class="built_in">return</span> i;
+    }
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        view  = getLayoutInflater.inflate(R.layout.item,null);
+        TextView text = (TextView) view.findViewById(R.id.text);
+        Button button = (Button) view.findViewById(R.id.button);
+        text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+        button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
+        <span class="built_in">return</span> view;
+    }
+}
+</code></pre>
+<p>##使用ViewHolder的例子：  </p>
+<pre><code class="bash">private class MyAdapter extends BaseAdapter{
+    private List&lt;Map&lt;String, String&gt;&gt; items;
+    public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
+            this.items = list;
+    }
+    @Override
+    public int <span class="function"><span class="title">getCount</span></span>() {
+        <span class="built_in">return</span> items.size();
+    }
+    @Override
+    public Object getItem(int i) {
+        <span class="built_in">return</span> items.get(i);
+    }
+    @Override
+    public long getItemId(int i) {
+        <span class="built_in">return</span> i;
+    }
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+    ViewHolder viewHolder = new ViewHolder();
+    <span class="keyword">if</span>(view == null){
+                view  = getLayoutInflater.inflate(R.layout.item,null);
+                viewHolder.text = (TextView) view.findViewById(R.id.text);
+                viewHolder.button = (Button) view.findViewById(R.id.button);
+                viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+                viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
+                view.setTag(viewholder);
+    }<span class="keyword">else</span>{
+        viewHolder = view.getTag();
+    }
+    <span class="built_in">return</span> view;
+    }
+    private final class ViewHolder{
+        public TextView text;
+        public Button button;
+    }
+}
+</code></pre>
 <p>就是这么简单！希望能对初学者有点帮助！<br>本人学识疏浅，错误之处请帮忙指出，不胜感激！<br>email: luozhouyang0528@gmail.com</p>
 
       
