@@ -136,20 +136,19 @@
     }
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-    ViewHolder viewHolder = new ViewHolder();
-    <span class="keyword">if</span>(view == null){
-        view  = getLayoutInflater.inflate(R.layout.item,null);
-        viewHolder.text = (TextView) view.findViewById(R.id.text);
-        viewHolder.button = (Button) view.findViewById(R.id.button);
-
-         view.setTag(viewholder);
-    }<span class="keyword">else</span>{
-        viewHolder = view.getTag();
-    }
-    viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
-    viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
-    <span class="built_in">return</span> view;
-    }
+        ViewHolder viewHolder = new ViewHolder();
+        <span class="keyword">if</span>(view == null){
+            view  = getLayoutInflater.inflate(R.layout.item,null);
+            viewHolder.text = (TextView) view.findViewById(R.id.text);
+            viewHolder.button = (Button) view.findViewById(R.id.button);
+            view.setTag(viewholder);
+        }<span class="keyword">else</span>{
+            viewHolder = view.getTag();
+        }
+        viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+        viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
+        <span class="built_in">return</span> view;
+        }
     private final class ViewHolder{
         public TextView text;
         public Button button;
