@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Git的分支与合并 | StupidL&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是分支分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。git的分支与很多版本控制系统不同的地方在于，git分支过程很快，并且与项目的规模没有关系，操作花费的时间是常量级。  
+
+git提交(commit)后的快照提交之后的快照包括以下几个内容：  
+
+表示工作目录下的文件快照内容的blob对象  
+工作目录下要提交的文件目录组成的tree对象  
+指向该tree对象的指针">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git的分支与合并">
+<meta property="og:url" content="http://stupidme.me/1016/06/29/GitBranch/index.html">
+<meta property="og:site_name" content="StupidL's Blog">
+<meta property="og:description" content="什么是分支分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。git的分支与很多版本控制系统不同的地方在于，git分支过程很快，并且与项目的规模没有关系，操作花费的时间是常量级。  
+
+git提交(commit)后的快照提交之后的快照包括以下几个内容：  
+
+表示工作目录下的文件快照内容的blob对象  
+工作目录下要提交的文件目录组成的tree对象  
+指向该tree对象的指针">
+<meta property="og:updated_time" content="2016-06-29T07:37:10.893Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git的分支与合并">
+<meta name="twitter:description" content="什么是分支分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。git的分支与很多版本控制系统不同的地方在于，git分支过程很快，并且与项目的规模没有关系，操作花费的时间是常量级。  
+
+git提交(commit)后的快照提交之后的快照包括以下几个内容：  
+
+表示工作目录下的文件快照内容的blob对象  
+工作目录下要提交的文件目录组成的tree对象  
+指向该tree对象的指针">
+  
+    <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StupidL&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stupidme.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GitBranch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/1016/06/29/GitBranch/" class="article-date">
+  <time datetime="1016-06-29T04:02:03.000Z" itemprop="datePublished">1016-06-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git的分支与合并
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是分支"><a href="#什么是分支" class="headerlink" title="什么是分支"></a>什么是分支</h2><p>分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。git的分支与很多版本控制系统不同的地方在于，git分支过程很快，并且与项目的规模没有关系，操作花费的时间是常量级。  </p>
+<hr>
+<h2 id="git提交-commit-后的快照"><a href="#git提交-commit-后的快照" class="headerlink" title="git提交(commit)后的快照"></a>git提交(commit)后的快照</h2><p>提交之后的快照包括以下几个内容：  </p>
+<ul>
+<li>表示工作目录下的文件快照内容的blob对象  </li>
+<li>工作目录下要提交的文件目录组成的tree对象  </li>
+<li>指向该tree对象的指针  </li>
+<li>提交信息  </li>
+<li>指向前一次提交的指针  </li>
+</ul>
+<p>如图所示：<br><img src="" alt="commit_snapshot">    </p>
+<hr>
+<h2 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h2><p>工作目录默认是主分支master。如果想要创建一个分支，则只需：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch new_branch_name</span><br></pre></td></tr></table></figure>
+<p>要切换到新的分支下工作，应该：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout new_branch_name</span><br></pre></td></tr></table></figure></p>
+<p>以上两个步骤其实可以合二为一：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b new_branch_name</span><br></pre></td></tr></table></figure></p>
+<p>接下来就可以和在主分支下一样自由的在该分支工作了。<br>如果你想切换回主分支，也是一样的命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="合并简单分支"><a href="#合并简单分支" class="headerlink" title="合并简单分支"></a>合并简单分支</h2><p>在新的分支下，你做了一些修改之后，先做提交，然后回到主分支进行合并，你的步骤应该是这样的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout new_branch_name  </span><br><span class="line">$ ... <span class="keyword">do</span> something such as:  </span><br><span class="line">$ vim new_branch_file.txt  </span><br><span class="line">$ ... add some contents <span class="keyword">in</span> the file   </span><br><span class="line">$ git add new_branch_file.txt  </span><br><span class="line">$ git commit -m <span class="string">'create new_branch_file.txt'</span>  </span><br><span class="line">$ git checkout master  </span><br><span class="line">$ git merge new_branch_name</span><br></pre></td></tr></table></figure></p>
+<p>然后，你就可以看到合并的消息。至此，合并结束。<br>接下来你的新分支不需要再用了，直接删除该分支就行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch <span class="_">-d</span> new_branch_name</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="基本合并"><a href="#基本合并" class="headerlink" title="基本合并"></a>基本合并</h2><p>考虑一下情况：当有不同的分支进行了多次提交，而且他们对某些文件同时做了修改，那么合并的时候是不是会产生冲突呢？<br>答案是却是会产生冲突。git的处理方式是，将这些分支的最新提交，以及他们的共同祖先，进行一次简单的合并计算，如果遇到上述冲突，git无法干净准确的合并分支，这个工作最适合由人来完成，你可以手动合并这些冲突文件。<br>首先你需要查看哪些文件存在合并冲突：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br></pre></td></tr></table></figure></p>
+<p>存在冲突的合并文件会已”unmerged”状态列出。你对每一个文件手工解决冲突后，需要将它标记为已解决“resolved”，你应该这样：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add filename</span><br></pre></td></tr></table></figure></p>
+<p>再运行git status以确认所有冲突都解决。<br>如果已经满意了，你可以这样来完成这次合并：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">' merge files'</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><p>查看所有分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br></pre></td></tr></table></figure></p>
+<p>查看所有分支最后一次提交信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -v</span><br></pre></td></tr></table></figure></p>
+<p>查看与当前分支合并的或者没合并的分支，你可以：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch --merged  </span><br><span class="line">$ git branch --no-merged</span><br></pre></td></tr></table></figure></p>
+<p>如果删除未合并的分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch <span class="_">-d</span> branch_name</span><br></pre></td></tr></table></figure></p>
+<p>这样会失败。如果你确定要删除这个分支，你可以这样：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -D branch_name</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>如有错误，欢迎指正！<br>Email: luozhouayng0528@gmail.com</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/1016/06/29/GitBranch/" data-id="ciq0kkqb30000fp0w5g0o6b61" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/26/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1016/06/">六月 1016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/27/GitNotes/">Basic git</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/Handler/">Android Handler</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/BaseAdapter with ViewHoler/">BaseAdapter中使用ViewHolder</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/vim-with-markdown/">vim with markdown</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 StupidL<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
