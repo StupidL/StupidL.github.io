@@ -64,6 +64,123 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-regular_expressions" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/regular_expressions/" class="article-date">
+  <time datetime="2016-07-02T11:43:30.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/02/regular_expressions/">Java正则表达式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="正则表达式的定义"><a href="#正则表达式的定义" class="headerlink" title="正则表达式的定义"></a>正则表达式的定义</h2><p>一个正则表达式可以是：  </p>
+<ul>
+<li>空字符串  </li>
+<li>单个字符  </li>
+<li>包含在括号中的另一个正则表达式  </li>
+<li>两个或多个连接起来的正则表达式  </li>
+<li>由或运算符分隔的两个或者多个正则表达式  </li>
+<li>由闭包运算符标记的正则表达式  </li>
+</ul>
+<p>每个正则表达式都是一个字符串的集合：  </p>
+<ul>
+<li>空正则表达式表示的字符串集合为空，含有0个元素  </li>
+<li>一个字符表示的字符串的集合含有1个元素，即该字符本身。  </li>
+<li>一个由括号和包含在其中的正则表达式组成的正则表达式表示的字符串的集合与括号内的正则表达式相同。  </li>
+<li>由两个正则表达式连接起来的正则表达式表示的字符串的集合为这两个正则表达式分别表示的字符串集合的叉乘。  </li>
+<li>由或运算符连接的两个正则表达式所表示的字符串的集合为两个正则表达式分别所表示的字符串集合的并集。  </li>
+<li>由一个正则表达式的闭包所表示的字符串的集合由空字符串或者将被修饰的正则表达式所表示的字符串集合重复任意次所得到的所有字符所组成。  </li>
+</ul>
+<h2 id="正则表达式的描述模式"><a href="#正则表达式的描述模式" class="headerlink" title="正则表达式的描述模式"></a>正则表达式的描述模式</h2><p>模式的描述由四种基本的操作和作为操作的字符组成。  </p>
+<h3 id="链接操作"><a href="#链接操作" class="headerlink" title="链接操作"></a>链接操作</h3><p>比如我们写出这样的表达式“AB”，它是一个包含两个字符的字符串，由A和B连接而成。  </p>
+<h3 id="或操作"><a href="#或操作" class="headerlink" title="或操作"></a>或操作</h3><p>或操作表示模式中多种可能的匹配。我们在两种选择之间指定一个“或”运算符。“A|B”这个字符串表示：A或者B。连接操作的优先级高于或操作。如“AB|BCD”表示：AB或者BCD。  </p>
+<h3 id="闭包操作"><a href="#闭包操作" class="headerlink" title="闭包操作"></a>闭包操作</h3><p>闭包操作表示将模式的部分重复任意的次数，包括零次。我们将“<em>“符号标记在需要重复的模式之后以表示闭包。”AB</em>“表示一个A或者任意个B；”A*B“表示任意个A和一个B。  </p>
+<h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><p>括号用来改变默认的优先级顺序。例如A(B|CD)E表示：ABE或者ACDE。(AB)*表示：将(AB)连接任意多次（包括零次）。  </p>
+<hr>
+<h2 id="缩略写法"><a href="#缩略写法" class="headerlink" title="缩略写法"></a>缩略写法</h2><p>一般的应用程序都在基本的规则基础上增加了各种额外规则，以力求简洁地描述实际应用中所需要的效果。从理论上看，它们都是涉及多个操作数的一系列操作的简略写法，从实际角度来看，他们都是对基本操作的拓展，以便能够写出小巧的模式。  </p>
+<h3 id="字符集描述符"><a href="#字符集描述符" class="headerlink" title="字符集描述符"></a>字符集描述符</h3><p>| 名称 | 记法 | 举例 |<br>|：——-| ：——|——：|<br>|通配符   | .        | A.B  |<br>|指定的集合|包含在[]中的字符 | [ABCDE]*|<br>|范围集合  | 包含在[] ，由’-‘分隔 | [A-Z][0-9]|<br>|补集      |包含在[]中，首字母为’^’|[^abcd]|  </p>
+<h3 id="闭包的简写"><a href="#闭包的简写" class="headerlink" title="闭包的简写"></a>闭包的简写</h3><p>|选项 | 记法 | 举例 | | 原始写法 | 语言中的字符串    | 不在语言中的字符串 |<br>|：—|：—-|：—-|:—|：———|：————-|：——————|<br>|至少重复1次| + | (AB)+  | | (AB)(AB)*   | AB ABABAB | BBBAAA 空字符串|<br>|重复0次或者1次 | ？   | (AB)?| | AB\   |空字符串 | 空字符串 AB| 所有其他字符串 |<br>|重复指定次数|由{}指定次数 | (AB){3}| | (AB)(AB)(AB)    | ABABAB  | 其他所有字符串 |<br>|重复指定范围的次数 | 由{}指定    | 9AB){1-2}|  | (AB)\  |(AB)(AB) | AB ABAB | 所有其他字符串|  </p>
+<h3 id="转义序列"><a href="#转义序列" class="headerlink" title="转义序列"></a>转义序列</h3><p>某些字符，例如“、”、“。”、“|”、“*”、“（”、“）”都是用来构造正则表达式的元字符。我们使用反斜杠开头的转义序列来将元字符和字母表中的字符区分开来。例如：<br>“\“表示”\”;<br>“\t”表示制表符;<br>“\n”表示换行符;<br>“\s”表示空白字符。  </p>
+<hr>
+<h2 id="正则表达式的应用"><a href="#正则表达式的应用" class="headerlink" title="正则表达式的应用"></a>正则表达式的应用</h2><ul>
+<li>子字符串查找  </li>
+<li>合法性检查  </li>
+<li>搜索</li>
+</ul>
+<hr>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#108;&#117;&#111;&#x7a;&#104;&#111;&#117;&#121;&#97;&#110;&#x67;&#x30;&#53;&#50;&#x38;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;">&#108;&#117;&#111;&#x7a;&#104;&#111;&#117;&#121;&#97;&#110;&#x67;&#x30;&#53;&#50;&#x38;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;</a>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="ciq583sss0000rs0wlxktkgk5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Java_String_StringBuilder" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/Java_String_StringBuilder/" class="article-date">
+  <time datetime="2016-06-30T15:25:30.000Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/30/Java_String_StringBuilder/">Java中的字符串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="String与StringBuilder"><a href="#String与StringBuilder" class="headerlink" title="String与StringBuilder"></a>String与StringBuilder</h2><p>Java中的String类型是不可变的，String类被声明为final,所以每一个看起来会修改String值的方法都是新创建了一个新的String对象，而原来的String对象未改变。<br>String对象是不可变的，但是你可以给它加任意多个引用，任何指向它的引用都不能改变它的值。<br>Java为String对象重载了“+”、“+=”两个运算符，这也是Java中仅有的两个重载过的运算符，程序员不允许自己重载运算符。<br>看下面一个例子：  </p>
+<pre><code>String mango = &quot;mango&quot;;  
+String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;  
+</code></pre><p>上面创建s对象的时候，创建了几个String对象？答案是4个！第一个自然是mango，然后每次运用“+”实际上都是创建了一个新的String对象。我想你应该发现问题所在了：为了新建一个String对象，居然创建了这么多中间对象！而且这些对象用过一次之后再也没用了！<br>显然，Java的设计者意识到了这个问题。于是有了我们熟悉的StringBuilder，它比String高效！值得注意的是，我们在代码之中可以使用String的方式来创建对象，因为编译器在编译的时候会自动的引入StringBuilder，即使我们没有使用StringBuilder。<br>那么直接使用StringBuilder与不使用有什么区别呢？看以下例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class MyStringBuilder&#123;  </span><br><span class="line">    public String implicit(String[] fields)&#123;  </span><br><span class="line">        String result = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span>(int i = 0;i&lt; fields.length; i++)&#123;</span><br><span class="line">            result += fields[i];</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public String explicit(String[] fields)&#123;</span><br><span class="line">        StringBuilder result = new StringBuilder();</span><br><span class="line">        <span class="keyword">for</span>(int i = 0;i&lt; fields.length; i++)&#123;</span><br><span class="line">                result.appen(fields[i]);</span><br><span class="line">            &#125;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>虽然编译的时候第一个方法也会使用StringBuilder优化，但是每循环一次，就会创建一个新的StringBuilder对象！但是第二个方法自始至终只有一个StringBuilder对象！<br>除此之外，StringBuilder对象还允许你预先为其指定大小。当你知道最终的字符串大概有多长的时候，预先指定大小可以避免多次重新分配缓冲区。所以，我们应该尽量多的使用StringBuilder而不是String！  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="ciq583stw0003rs0wp8l8g0ib" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-GitBranch" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/29/GitBranch/" class="article-date">
@@ -523,7 +640,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
     </div>
   </div>
 
@@ -533,7 +650,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
     </div>
   </div>
 
@@ -542,7 +659,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -555,6 +672,14 @@ Thread_2.mThreadLocal = null
       <ul>
         
           <li>
+            <a href="/2016/07/02/regular_expressions/">Java正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/Java_String_StringBuilder/">Java中的字符串</a>
+          </li>
+        
+          <li>
             <a href="/2016/06/29/GitBranch/">Git的分支与合并</a>
           </li>
         
@@ -564,14 +689,6 @@ Thread_2.mThreadLocal = null
         
           <li>
             <a href="/2016/06/26/Handler/">Android Handler</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/26/BaseAdapter with ViewHoler/">BaseAdapter中使用ViewHolder</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/26/vim-with-markdown/">vim with markdown</a>
           </li>
         
       </ul>
