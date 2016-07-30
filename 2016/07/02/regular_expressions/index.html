@@ -37,7 +37,7 @@
 空正则表达式表示的字符串集合为空，含有0个元素  
 一个字符表示的字符串的集合含有1个元素，即该字符本身。  
 一个由括号和包含在">
-<meta property="og:updated_time" content="2016-07-02T13:46:54.881Z">
+<meta property="og:updated_time" content="2016-07-30T14:59:29.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java正则表达式">
 <meta name="twitter:description" content="正则表达式的定义一个正则表达式可以是：  
@@ -149,8 +149,90 @@
 <h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><p>括号用来改变默认的优先级顺序。例如A(B|CD)E表示：ABE或者ACDE。(AB)*表示：将(AB)连接任意多次（包括零次）。  </p>
 <hr>
 <h2 id="缩略写法"><a href="#缩略写法" class="headerlink" title="缩略写法"></a>缩略写法</h2><p>一般的应用程序都在基本的规则基础上增加了各种额外规则，以力求简洁地描述实际应用中所需要的效果。从理论上看，它们都是涉及多个操作数的一系列操作的简略写法，从实际角度来看，他们都是对基本操作的拓展，以便能够写出小巧的模式。  </p>
-<h3 id="字符集描述符"><a href="#字符集描述符" class="headerlink" title="字符集描述符"></a>字符集描述符</h3><p>| 名称 | 记法 | 举例 |<br>|：——-| ：——|——：|<br>|通配符   | .        | A.B  |<br>|指定的集合|包含在[]中的字符 | [ABCDE]*|<br>|范围集合  | 包含在[] ，由’-‘分隔 | [A-Z][0-9]|<br>|补集      |包含在[]中，首字母为’^’|[^abcd]|  </p>
-<h3 id="闭包的简写"><a href="#闭包的简写" class="headerlink" title="闭包的简写"></a>闭包的简写</h3><p>|选项 | 记法 | 举例 | | 原始写法 | 语言中的字符串    | 不在语言中的字符串 |<br>|：—|：—-|：—-|:—|：———|：————-|：——————|<br>|至少重复1次| + | (AB)+  | | (AB)(AB)*   | AB ABABAB | BBBAAA 空字符串|<br>|重复0次或者1次 | ？   | (AB)?| | AB\   |空字符串 | 空字符串 AB| 所有其他字符串 |<br>|重复指定次数|由{}指定次数 | (AB){3}| | (AB)(AB)(AB)    | ABABAB  | 其他所有字符串 |<br>|重复指定范围的次数 | 由{}指定    | 9AB){1-2}|  | (AB)\  |(AB)(AB) | AB ABAB | 所有其他字符串|  </p>
+<h3 id="字符集描述符"><a href="#字符集描述符" class="headerlink" title="字符集描述符"></a>字符集描述符</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">记法</th>
+<th style="text-align:right">举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">通配符</td>
+<td style="text-align:left">.</td>
+<td style="text-align:right">A.B</td>
+</tr>
+<tr>
+<td style="text-align:left">指定的集合</td>
+<td style="text-align:left">包含在[]中的字符</td>
+<td style="text-align:right">[ABCDE]*</td>
+</tr>
+<tr>
+<td style="text-align:left">范围集合</td>
+<td style="text-align:left">包含在[] ，由’-‘分隔</td>
+<td style="text-align:right">[A-Z][0-9]</td>
+</tr>
+<tr>
+<td style="text-align:left">补集</td>
+<td style="text-align:left">包含在[]中，首字母为’^’</td>
+<td style="text-align:right">[^abcd]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="闭包的简写"><a href="#闭包的简写" class="headerlink" title="闭包的简写"></a>闭包的简写</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">记法</th>
+<th style="text-align:left">举例</th>
+<th style="text-align:left"></th>
+<th style="text-align:left">原始写法</th>
+<th style="text-align:left">语言中的字符串</th>
+<th style="text-align:left">不在语言中的字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">至少重复1次</td>
+<td style="text-align:left">+</td>
+<td style="text-align:left">(AB)+</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">(AB)(AB)*</td>
+<td style="text-align:left">AB ABABAB</td>
+<td style="text-align:left">BBBAAA 空字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">重复0次或者1次</td>
+<td style="text-align:left">？</td>
+<td style="text-align:left">(AB)?</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">AB\</td>
+<td style="text-align:left">空字符串</td>
+<td style="text-align:left">空字符串 AB</td>
+<td>所有其他字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">重复指定次数</td>
+<td style="text-align:left">由{}指定次数</td>
+<td style="text-align:left">(AB){3}</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">(AB)(AB)(AB)</td>
+<td style="text-align:left">ABABAB</td>
+<td style="text-align:left">其他所有字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">重复指定范围的次数</td>
+<td style="text-align:left">由{}指定</td>
+<td style="text-align:left">9AB){1-2}</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">(AB)\</td>
+<td style="text-align:left">(AB)(AB)</td>
+<td style="text-align:left">AB ABAB</td>
+<td>所有其他字符串</td>
+</tr>
+</tbody>
+</table>
 <h3 id="转义序列"><a href="#转义序列" class="headerlink" title="转义序列"></a>转义序列</h3><p>某些字符，例如“、”、“。”、“|”、“*”、“（”、“）”都是用来构造正则表达式的元字符。我们使用反斜杠开头的转义序列来将元字符和字母表中的字符区分开来。例如：<br>“\“表示”\”;<br>“\t”表示制表符;<br>“\n”表示换行符;<br>“\s”表示空白字符。  </p>
 <hr>
 <h2 id="正则表达式的应用"><a href="#正则表达式的应用" class="headerlink" title="正则表达式的应用"></a>正则表达式的应用</h2><ul>
@@ -159,12 +241,12 @@
 <li>搜索</li>
 </ul>
 <hr>
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#108;&#x75;&#111;&#122;&#104;&#111;&#x75;&#x79;&#x61;&#110;&#x67;&#x30;&#53;&#50;&#56;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#108;&#x75;&#111;&#122;&#104;&#111;&#x75;&#x79;&#x61;&#110;&#x67;&#x30;&#53;&#50;&#56;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>  </p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#108;&#x75;&#111;&#122;&#x68;&#x6f;&#117;&#x79;&#97;&#110;&#103;&#x30;&#x35;&#x32;&#56;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#108;&#x75;&#111;&#122;&#x68;&#x6f;&#117;&#x79;&#97;&#110;&#103;&#x30;&#x35;&#x32;&#56;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;</a>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="cir9auj9f000cq80wqhh1zmko" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="cir9axlgu000ctt0wgjcuhzsb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
