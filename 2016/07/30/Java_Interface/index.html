@@ -15,7 +15,7 @@
 <meta property="og:description" content="在Java中，接口(interface)和内部类为我们提供了一种将接口与实现分离的更加结构化的方法。   
 抽象类与抽象方法
 包含抽象方法的类叫做抽象类。如果一个类包含一个或者多个抽象方法，则该类必须限定为抽象的。抽象类其实起着这样一个作用——通用接口。不同的子类可以用不同的方式表示此接口。这和我们讨论的接口是不是很像呢？这也是为什么在说接口(interface)之前要说抽象类的原因。如果想从一个">
-<meta property="og:updated_time" content="2016-07-30T14:54:24.299Z">
+<meta property="og:updated_time" content="2016-07-30T14:57:04.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Interface">
 <meta name="twitter:description" content="在Java中，接口(interface)和内部类为我们提供了一种将接口与实现分离的更加结构化的方法。   
@@ -123,10 +123,7 @@ class A implements I1, I2, I3{
 <li>为了能够向上转型为多个类型以及由此带来的灵活性  </li>
 <li>防止客户端程序员创建该类的对象，并且确定这只是一个接口——这一点与抽象类相同。  </li>
 </ul>
-<p>那么，我们应该使用接口还是抽象类呢？  </p>
-<blockquote>
-<p>如果要创建不带任何方法定义和成员变量的基类，那么就应该选择接口而不是抽象类。接口优先于抽象类。  </p>
-</blockquote>
+<p>那么，我们应该使用接口还是抽象类呢？<br><strong>如果要创建不带任何方法定义和成员变量的基类，那么就应该选择接口而不是抽象类。</strong>    </p>
 <h3 id="接口的扩展"><a href="#接口的扩展" class="headerlink" title="接口的扩展"></a>接口的扩展</h3><hr>
 <p>说到扩展接口，第一反应就是通过继承现有的接口。比如这样：  </p>
 <pre><code class="bash">
@@ -185,7 +182,7 @@ interface D extends A, C{}
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="cir9aqknx0004ng0w6xu0rvht" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="cir9auj910006q80wq7mcmbp8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
