@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>StupidL&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:  知乎专栏最新APIdate: 2016-08-21 15:00:00tag: android  
+
+众所周知，知乎并没有公开API。网上找到的知乎专栏API至少都是几个月之前的，知乎的API可能会略有调整，为了抓取最新的API，我决定自己抓包分析。抓包分析的时间为2016-08-21.  
+大家可以和这篇分析对比，看看有什么不一样的地方。知乎专栏API  
+获取专栏的信息获取专栏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StupidL's Blog">
+<meta property="og:url" content="http://stupidme.me/2016/08/21/ZhiHuColumn_API/index.html">
+<meta property="og:site_name" content="StupidL's Blog">
+<meta property="og:description" content="title:  知乎专栏最新APIdate: 2016-08-21 15:00:00tag: android  
+
+众所周知，知乎并没有公开API。网上找到的知乎专栏API至少都是几个月之前的，知乎的API可能会略有调整，为了抓取最新的API，我决定自己抓包分析。抓包分析的时间为2016-08-21.  
+大家可以和这篇分析对比，看看有什么不一样的地方。知乎专栏API  
+获取专栏的信息获取专栏">
+<meta property="og:updated_time" content="2016-08-21T13:12:15.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="StupidL's Blog">
+<meta name="twitter:description" content="title:  知乎专栏最新APIdate: 2016-08-21 15:00:00tag: android  
+
+众所周知，知乎并没有公开API。网上找到的知乎专栏API至少都是几个月之前的，知乎的API可能会略有调整，为了抓取最新的API，我决定自己抓包分析。抓包分析的时间为2016-08-21.  
+大家可以和这篇分析对比，看看有什么不一样的地方。知乎专栏API  
+获取专栏的信息获取专栏">
+  
+    <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StupidL&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stupidme.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ZhiHuColumn_API" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/21/ZhiHuColumn_API/" class="article-date">
+  <time datetime="2016-08-21T13:12:15.315Z" itemprop="datePublished">2016-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title:  知乎专栏最新API<br>date: 2016-08-21 15:00:00<br>tag: android  </p>
+<hr>
+<p>众所周知，知乎并没有公开API。<br>网上找到的知乎专栏API至少都是几个月之前的，知乎的API可能会略有调整，为了抓取最新的API，我决定自己抓包分析。<br>抓包分析的时间为2016-08-21.  </p>
+<p>大家可以和这篇分析对比，看看有什么不一样的地方。<a href="https://v2ex.com/t/291722" target="_blank" rel="external">知乎专栏API</a>  </p>
+<h2 id="获取专栏的信息"><a href="#获取专栏的信息" class="headerlink" title="获取专栏的信息"></a>获取专栏的信息</h2><p>获取专栏信息的URL为：  </p>
+<pre><code class="bash">http://zhuanlan.zhihu.com/api/columns/{name}
+</code></pre>
+<p>{name}表示的是专栏的名称，比如： wooyun<br>所以完整的URL为：  </p>
+<pre><code class="bash">http://zhuanlan.zhihu.com/api/columns/wooyun
+</code></pre>
+<p>利用Chrome浏览器提供的开发者工具，进行抓包，可以得到以下JSON数据：  </p>
+<pre><code class="bash">{
+  <span class="string">"followersCount"</span>: 36694,
+  <span class="string">"creator"</span>: {
+    <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/____"</span>,
+    <span class="string">"bio"</span>: <span class="string">"I can't"</span>,
+    <span class="string">"hash"</span>: <span class="string">"37841ec3e75e6583e627f64a21343b4d"</span>,
+    <span class="string">"name"</span>: <span class="string">"\u957f\u77ed\u77ed"</span>,
+    <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+    <span class="string">"slug"</span>: <span class="string">"____"</span>,
+    <span class="string">"avatar"</span>: {
+      <span class="string">"id"</span>: <span class="string">"6c83b4b34"</span>,
+      <span class="string">"template"</span>: <span class="string">"https://pic1.zhimg.com/{id}_{size}.jpg"</span>
+    },
+    <span class="string">"description"</span>: <span class="string">""</span>
+  },
+  <span class="string">"topics"</span>: [
+    {
+      <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19670074"</span>,
+      <span class="string">"id"</span>: <span class="string">"19670074"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u4e4c\u4e91 (WooYun)"</span>
+    },
+    {
+      <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19554927"</span>,
+      <span class="string">"id"</span>: <span class="string">"19554927"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u7f51\u7edc\u5b89\u5168"</span>
+    }
+  ],
+  <span class="string">"activateState"</span>: <span class="string">"activated"</span>,
+  <span class="string">"href"</span>: <span class="string">"/api/columns/wooyun"</span>,
+  <span class="string">"acceptSubmission"</span>: <span class="literal">true</span>,
+  <span class="string">"firstTime"</span>: <span class="literal">false</span>,
+  <span class="string">"postTopics"</span>: [
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 99,
+      <span class="string">"name"</span>: <span class="string">"\u4e92\u8054\u7f51"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 225,
+      <span class="string">"name"</span>: <span class="string">"\u524d\u7aef\u5f00\u53d1"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 383,
+      <span class="string">"name"</span>: <span class="string">"\u9006\u5411\u5de5\u7a0b"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 488,
+      <span class="string">"name"</span>: <span class="string">"\u624b\u673a"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 4,
+      <span class="string">"id"</span>: 1567,
+      <span class="string">"name"</span>: <span class="string">"\u7f51\u7edc\u5b89\u5168"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 2155,
+      <span class="string">"name"</span>: <span class="string">"\u4e2d\u56fd\u79fb\u52a8"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 2340,
+      <span class="string">"name"</span>: <span class="string">"IPTV"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 2593,
+      <span class="string">"name"</span>: <span class="string">"Internet Explorer"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 2666,
+      <span class="string">"name"</span>: <span class="string">"OAuth"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 2,
+      <span class="string">"id"</span>: 2823,
+      <span class="string">"name"</span>: <span class="string">"\u9ed1\u5ba2 (Hacker)"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 3631,
+      <span class="string">"name"</span>: <span class="string">"\u8def\u7531\u5668"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 3646,
+      <span class="string">"name"</span>: <span class="string">"Java"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 5120,
+      <span class="string">"name"</span>: <span class="string">"\u7535\u4fe1"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 5833,
+      <span class="string">"name"</span>: <span class="string">"\u7528\u6237\u6570\u636e"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 11096,
+      <span class="string">"name"</span>: <span class="string">"\u4f18\u6b65\uff08Uber\uff09"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 11587,
+      <span class="string">"name"</span>: <span class="string">"XSS"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 11843,
+      <span class="string">"name"</span>: <span class="string">"\u673a\u9876\u76d2"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 12741,
+      <span class="string">"name"</span>: <span class="string">"\u8bc8\u9a97"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 16275,
+      <span class="string">"name"</span>: <span class="string">"\u7ffb\u8bd1\u4e66\u7c4d"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 16898,
+      <span class="string">"name"</span>: <span class="string">"WebKit"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 3,
+      <span class="string">"id"</span>: 17686,
+      <span class="string">"name"</span>: <span class="string">"Android"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 18104,
+      <span class="string">"name"</span>: <span class="string">"\u79fb\u52a8\u5b89\u5168"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 19259,
+      <span class="string">"name"</span>: <span class="string">"\u77ed\u4fe1\u5e73\u53f0"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 22208,
+      <span class="string">"name"</span>: <span class="string">"\u7f51\u7edc\u6e17\u900f"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 29478,
+      <span class="string">"name"</span>: <span class="string">"\u7f51\u7edc\u9493\u9c7c\u8bc8\u9a97"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 40041,
+      <span class="string">"name"</span>: <span class="string">"\u4e4c\u4e91 (WooYun)"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 46204,
+      <span class="string">"name"</span>: <span class="string">"Android \u7b2c\u4e09\u65b9 ROM"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 56158,
+      <span class="string">"name"</span>: <span class="string">"\u77ed\u4fe1\u9a8c\u8bc1\u7801"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 2,
+      <span class="string">"id"</span>: 120695,
+      <span class="string">"name"</span>: <span class="string">"\u4f2a\u57fa\u7ad9"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 136592,
+      <span class="string">"name"</span>: <span class="string">"LTE-EPC"</span>
+    },
+    {
+      <span class="string">"postsCount"</span>: 1,
+      <span class="string">"id"</span>: 141836,
+      <span class="string">"name"</span>: <span class="string">"Web \u6f0f\u6d1e"</span>
+    }
+  ],
+  <span class="string">"pendingName"</span>: <span class="string">""</span>,
+  <span class="string">"avatar"</span>: {
+    <span class="string">"id"</span>: <span class="string">"0ec77eef1"</span>,
+    <span class="string">"template"</span>: <span class="string">"https://pic2.zhimg.com/{id}_{size}.jpg"</span>
+  },
+  <span class="string">"canManage"</span>: <span class="literal">false</span>,
+  <span class="string">"description"</span>: <span class="string">"\u5199\u70b9\u6709\u7528\u7684\u4e1c\u897f\u3002"</span>,
+  <span class="string">"pendingTopics"</span>: [],
+  <span class="string">"nameCanEditUntil"</span>: 0,
+  <span class="string">"reason"</span>: <span class="string">""</span>,
+  <span class="string">"banUntil"</span>: 0,
+  <span class="string">"slug"</span>: <span class="string">"wooyun"</span>,
+  <span class="string">"name"</span>: <span class="string">"\u4e4c\u4e91\u541b"</span>,
+  <span class="string">"url"</span>: <span class="string">"/wooyun"</span>,
+  <span class="string">"intro"</span>: <span class="string">"\u5199\u70b9\u6709\u7528\u7684\u4e1c\u897f\u3002"</span>,
+  <span class="string">"topicsCanEditUntil"</span>: 0,
+  <span class="string">"activateAuthorRequested"</span>: <span class="string">"none"</span>,
+  <span class="string">"commentPermission"</span>: <span class="string">"anyone"</span>,
+  <span class="string">"following"</span>: <span class="literal">false</span>,
+  <span class="string">"postsCount"</span>: 54,
+  <span class="string">"canPost"</span>: <span class="literal">false</span>
+}
+</code></pre>
+<p>结果与上述文章大同小异，多了几个无关紧要的字段而已。<br>其中：<br>“followersCount”:   关注该专栏的人数<br>“creator”:          该专栏的创建者<br>“topics”:           该专栏包含的话题<br>“avatar”:           头像信息，将id拼接到template里面就可以访问头像地址以获得头像，{size}有三种选择：l\m\s<br>“description”:      专栏的介绍<br>“intro”:            专栏的介绍（并不确定）  </p>
+<h2 id="获取专栏中的文章"><a href="#获取专栏中的文章" class="headerlink" title="获取专栏中的文章"></a>获取专栏中的文章</h2><p>获取专栏中的文章列表的URL为：  </p>
+<pre><code class="bash">http://zhuanlan.zhihu.com/api/columns/{name}/posts?<span class="built_in">limit</span>={<span class="built_in">limit</span>}&amp;offset={offset}
+</code></pre>
+<p>其中：<br>{name}表示：   专栏的名称，比如： wooyun<br>{limit}表示：  获取文章的上限，比如： 10<br>{offset}表示： 从哪里开始获取，比如： 5  </p>
+<p>还是以wooyun为例，完整的URL为：  </p>
+<pre><code class="bash">http://zhuanlan.zhihu.com/api/columns/wooyun/posts?<span class="built_in">limit</span>=2&amp;offset=0
+</code></pre>
+<p>获得的返回结果如下:  </p>
+<pre><code class="bash">[
+  {
+    <span class="string">"isTitleImageFullScreen"</span>: <span class="literal">false</span>,
+    <span class="string">"rating"</span>: <span class="string">"none"</span>,
+    <span class="string">"sourceUrl"</span>: <span class="string">""</span>,
+    <span class="string">"publishedTime"</span>: <span class="string">"2016-06-08T18:07:21+08:00"</span>,
+    <span class="string">"links"</span>: {
+      <span class="string">"comments"</span>: <span class="string">"/api/posts/21308493/comments"</span>
+    },
+    <span class="string">"author"</span>: {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/fenggou"</span>,
+      <span class="string">"bio"</span>: <span class="string">"\u4fe1\u606f\u5b89\u5168\uff0c\u9e21\u5c3e\u9152\uff0c\u7535\u5409\u4ed6\uff0c\u6444\u5f71\u3002"</span>,
+      <span class="string">"hash"</span>: <span class="string">"1e373c5c6d9af3c8beaeb9aadc0890ac"</span>,
+      <span class="string">"name"</span>: <span class="string">"fenggou"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"fenggou"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"939c20127"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic4.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">"\u5199\u6587\u5b57\u5bf9\u4e8e\u6211\u6765\u8bf4\u633a\u75db\u82e6\u7684\u3002"</span>
+    },
+    <span class="string">"url"</span>: <span class="string">"/p/21308493"</span>,
+    <span class="string">"title"</span>: <span class="string">"\u9ed1\u5ba2\u5bf9 Uber \u4f7f\u51fa\u300c\u6c34\u571f\u4e0d\u670d\u300d\u6280\u80fd\uff0c\u7528\u6237\u94b1\u5305\u53d7\u523010000\u70b9\u4f24\u5bb3"</span>,
+    <span class="string">"titleImage"</span>: <span class="string">"https://pic4.zhimg.com/031e06ee614489dcfbda68218be69893_r.jpg"</span>,
+    <span class="string">"summary"</span>: <span class="string">""</span>,
+    <span class="string">"content"</span>: <span class="string">"内容太长不予显示"</span>,
+    <span class="string">"state"</span>: <span class="string">"published"</span>,
+    <span class="string">"href"</span>: <span class="string">"/api/posts/21308493"</span>,
+    <span class="string">"meta"</span>: {
+      <span class="string">"previous"</span>: null,
+      <span class="string">"next"</span>: null
+    },
+    <span class="string">"commentPermission"</span>: <span class="string">"anyone"</span>,
+    <span class="string">"snapshotUrl"</span>: <span class="string">""</span>,
+    <span class="string">"canComment"</span>: <span class="literal">false</span>,
+    <span class="string">"slug"</span>: 21308493,
+    <span class="string">"commentsCount"</span>: 57,
+    <span class="string">"likesCount"</span>: 558
+  },
+  {
+    <span class="string">"isTitleImageFullScreen"</span>: <span class="literal">false</span>,
+    <span class="string">"rating"</span>: <span class="string">"none"</span>,
+    <span class="string">"sourceUrl"</span>: <span class="string">""</span>,
+    <span class="string">"publishedTime"</span>: <span class="string">"2016-04-07T16:50:52+08:00"</span>,
+    <span class="string">"links"</span>: {
+      <span class="string">"comments"</span>: <span class="string">"/api/posts/20694237/comments"</span>
+    },
+    <span class="string">"author"</span>: {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/fenggou"</span>,
+      <span class="string">"bio"</span>: <span class="string">"\u4fe1\u606f\u5b89\u5168\uff0c\u9e21\u5c3e\u9152\uff0c\u7535\u5409\u4ed6\uff0c\u6444\u5f71\u3002"</span>,
+      <span class="string">"hash"</span>: <span class="string">"1e373c5c6d9af3c8beaeb9aadc0890ac"</span>,
+      <span class="string">"name"</span>: <span class="string">"fenggou"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"fenggou"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"939c20127"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic4.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">"\u5199\u6587\u5b57\u5bf9\u4e8e\u6211\u6765\u8bf4\u633a\u75db\u82e6\u7684\u3002"</span>
+    },
+    <span class="string">"url"</span>: <span class="string">"/p/20694237"</span>,
+    <span class="string">"title"</span>: <span class="string">"\u6df1\u5ea6\u63ed\u79d8\uff1a\u4f2a\u57fa\u7ad9\u77ed\u4fe1\u8bc8\u9a97\u4ea7\u4e1a\u4f20\u5947\u59cb\u672b\uff01"</span>,
+    <span class="string">"titleImage"</span>: <span class="string">"https://pic2.zhimg.com/263519b85474c577e78809849f6e1761_r.jpg"</span>,
+    <span class="string">"summary"</span>: <span class="string">""</span>,
+    <span class="string">"content"</span>: <span class="string">"内容太长不予显示"</span>,
+    <span class="string">"state"</span>: <span class="string">"published"</span>,
+    <span class="string">"href"</span>: <span class="string">"/api/posts/20694237"</span>,
+    <span class="string">"meta"</span>: {
+      <span class="string">"previous"</span>: null,
+      <span class="string">"next"</span>: null
+    },
+    <span class="string">"commentPermission"</span>: <span class="string">"anyone"</span>,
+    <span class="string">"snapshotUrl"</span>: <span class="string">""</span>,
+    <span class="string">"canComment"</span>: <span class="literal">false</span>,
+    <span class="string">"slug"</span>: 20694237,
+    <span class="string">"commentsCount"</span>: 74,
+    <span class="string">"likesCount"</span>: 1133
+  }
+]
+</code></pre>
+<p>上面的结果就是：从该专栏的文章列表中，从第一篇开始，取出2篇文章。<br>其中：<br>“links”表示：      该文章的评论列表，写App的时候要是想显示评论，则用得上它<br>“author”表示：     文章的作者<br>“title”表示：      文章的标题<br>“titleImage”表示： 标题的配图，一般文章的展示页面会有一张图片，在标题的下面<br>“content”表示：    文章的具体内容<br>“commentsCount”:   评论数量<br>“likesCount”：     点赞数量<br>“slug”:            根据slug就可以访问单独的文章  </p>
+<h2 id="获取文章的详情"><a href="#获取文章的详情" class="headerlink" title="获取文章的详情"></a>获取文章的详情</h2><p>获取文章详情的URL为：  </p>
+<pre><code class="bash">https://zhuanlan.zhihu.com/api/posts/{slug}
+</code></pre>
+<p>其中：<br>{slug}表示： 文章的编号<br>以上面得到的两篇文章中的第一篇文章为例，完整的URL为：  </p>
+<pre><code class="bash">https://zhuanlan.zhihu.com/api/posts/21308493
+</code></pre>
+<p>抓包获得的结果如下：  </p>
+<pre><code class="bash">{
+  <span class="string">"isTitleImageFullScreen"</span>: <span class="literal">false</span>,
+  <span class="string">"rating"</span>: <span class="string">"none"</span>,
+  <span class="string">"titleImage"</span>: <span class="string">"https://pic4.zhimg.com/031e06ee614489dcfbda68218be69893_r.jpg"</span>,
+  <span class="string">"links"</span>: {
+    <span class="string">"comments"</span>: <span class="string">"/api/posts/21308493/comments"</span>
+  },
+  <span class="string">"reviewers"</span>: [],
+  <span class="string">"topics"</span>: [
+    {
+      <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19583569"</span>,
+      <span class="string">"id"</span>: <span class="string">"19583569"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u4f18\u6b65\uff08Uber\uff09"</span>
+    },
+    {
+      <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19554927"</span>,
+      <span class="string">"id"</span>: <span class="string">"19554927"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u7f51\u7edc\u5b89\u5168"</span>
+    },
+    {
+      <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19567675"</span>,
+      <span class="string">"id"</span>: <span class="string">"19567675"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u7528\u6237\u6570\u636e"</span>
+    }
+  ],
+  <span class="string">"titleImageSize"</span>: {
+    <span class="string">"width"</span>: 997,
+    <span class="string">"height"</span>: 559
+  },
+  <span class="string">"href"</span>: <span class="string">"/api/posts/21308493"</span>,
+  <span class="string">"author"</span>: {
+    <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/fenggou"</span>,
+    <span class="string">"bio"</span>: <span class="string">"\u4fe1\u606f\u5b89\u5168\uff0c\u9e21\u5c3e\u9152\uff0c\u7535\u5409\u4ed6\uff0c\u6444\u5f71\u3002"</span>,
+    <span class="string">"hash"</span>: <span class="string">"1e373c5c6d9af3c8beaeb9aadc0890ac"</span>,
+    <span class="string">"name"</span>: <span class="string">"fenggou"</span>,
+    <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+    <span class="string">"badge"</span>: {
+      <span class="string">"identity"</span>: null,
+      <span class="string">"best_answerer"</span>: null
+    },
+    <span class="string">"slug"</span>: <span class="string">"fenggou"</span>,
+    <span class="string">"avatar"</span>: {
+      <span class="string">"id"</span>: <span class="string">"939c20127"</span>,
+      <span class="string">"template"</span>: <span class="string">"https://pic4.zhimg.com/{id}_{size}.jpg"</span>
+    },
+    <span class="string">"description"</span>: <span class="string">"\u5199\u6587\u5b57\u5bf9\u4e8e\u6211\u6765\u8bf4\u633a\u75db\u82e6\u7684\u3002"</span>
+  },
+  <span class="string">"column"</span>: {
+    <span class="string">"slug"</span>: <span class="string">"wooyun"</span>,
+    <span class="string">"name"</span>: <span class="string">"\u4e4c\u4e91\u541b"</span>
+  },
+  <span class="string">"tipjarState"</span>: <span class="string">"inactivated"</span>,
+  <span class="string">"content"</span>: <span class="string">"内容太长不予显示"</span>,
+  <span class="string">"state"</span>: <span class="string">"published"</span>,
+  <span class="string">"sourceUrl"</span>: <span class="string">""</span>,
+  <span class="string">"pageCommentsCount"</span>: 57,
+  <span class="string">"canComment"</span>: <span class="literal">false</span>,
+  <span class="string">"snapshotUrl"</span>: <span class="string">""</span>,
+  <span class="string">"slug"</span>: 21308493,
+  <span class="string">"publishedTime"</span>: <span class="string">"2016-06-08T18:07:21+08:00"</span>,
+  <span class="string">"url"</span>: <span class="string">"/p/21308493"</span>,
+  <span class="string">"title"</span>: <span class="string">"\u9ed1\u5ba2\u5bf9 Uber \u4f7f\u51fa\u300c\u6c34\u571f\u4e0d\u670d\u300d\u6280\u80fd\uff0c\u7528\u6237\u94b1\u5305\u53d7\u523010000\u70b9\u4f24\u5bb3"</span>,
+  <span class="string">"lastestLikers"</span>: [
+    {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/andy-zhang-71-55"</span>,
+      <span class="string">"bio"</span>: <span class="string">"\u7f18\u8d77\u6027\u7a7a\u5565\u610f\u601d\uff1f"</span>,
+      <span class="string">"hash"</span>: <span class="string">"993fa341e49e521ec2a2721d2afc4c24"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u7f18\u5fc3"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"andy-zhang-71-55"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"c00959afcd99541d9314a859b3e2aee2"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic3.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">"\u4e0a\u58eb\u95fb\u9053\uff0c\u52e4\u800c\u884c\u4e4b\uff1b\u4e2d\u58eb\u95fb\u9053\uff0c\u82e5\u5b58\u82e5\u4ea1\uff1b\u4e0b\u58eb\u95fb\u9053\uff0c\u5927\u7b11\u4e4b\u3002\u4e0d\u7b11\u4e0d\u8db3\u4ee5\u4e3a\u9053\u3002"</span>
+    },
+    {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/shi-nian-yijian-85"</span>,
+      <span class="string">"bio"</span>: null,
+      <span class="string">"hash"</span>: <span class="string">"2172b9a181748e78501d193f4ffd8673"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u5341\u5e74\u4e00\u5251"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"shi-nian-yijian-85"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"e788cbf2cb0f3cf0d949d1b1770f18d6"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic3.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">""</span>
+    },
+    {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/bigcao"</span>,
+      <span class="string">"bio"</span>: <span class="string">"\u7ea0\u7ed3\u7efc\u5408\u4f53"</span>,
+      <span class="string">"hash"</span>: <span class="string">"3b581cdfa5c16265a5582fc20a04485f"</span>,
+      <span class="string">"name"</span>: <span class="string">"big\u66f9"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"bigcao"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"bc5d33daaa9c0d9a34193e295f289d4f"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic4.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">"\u60f3\u8981\u53d8\u6210\u4e00\u68f5\u51ac\u5b63\u7684\u6811"</span>
+    },
+    {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/dan-ding-9"</span>,
+      <span class="string">"bio"</span>: <span class="string">"\u8fd9\u4e16\u95f4\u552f\u6709\u68a6\u60f3\u4e0e\u597d\u59d1\u5a18\u4e0d\u53ef\u8f9c\u8d1f"</span>,
+      <span class="string">"hash"</span>: <span class="string">"b2b1269d7e6b39e914cb553e1d930ec0"</span>,
+      <span class="string">"name"</span>: <span class="string">"\u6de1\u5b9a"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"dan-ding-9"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"3b697b059aa5956aa2159312c12cfb20"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic1.zhimg.com/{id}_{size}.png"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">""</span>
+    },
+    {
+      <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/eve-86-33"</span>,
+      <span class="string">"bio"</span>: <span class="string">""</span>,
+      <span class="string">"hash"</span>: <span class="string">"87b67a74852cac9527023a4d63878729"</span>,
+      <span class="string">"name"</span>: <span class="string">"eve"</span>,
+      <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+      <span class="string">"slug"</span>: <span class="string">"eve-86-33"</span>,
+      <span class="string">"avatar"</span>: {
+        <span class="string">"id"</span>: <span class="string">"29a94cbd32ca8d3d49a010342da1648d"</span>,
+        <span class="string">"template"</span>: <span class="string">"https://pic2.zhimg.com/{id}_{size}.jpg"</span>
+      },
+      <span class="string">"description"</span>: <span class="string">"\u67d0\u5927\u5b66\u5b66\u751f"</span>
+    }
+  ],
+  <span class="string">"summary"</span>: <span class="string">"&lt;img src=\"https://pic2.zhimg.com/2e624cd7e8952fd8c13f3cd552ce77a1_200x112.jpg\" data-rawwidth=\"1280\" data-rawheight=\"1136\" class=\"origin_image inline-img zh-lightbox-thumb\" data-original=\"https://pic2.zhimg.com/2e624cd7e8952fd8c13f3cd552ce77a1_r.jpg\"&gt;\u5c0f\u65f6\u5019\u770b\u79d1\u5e7b\u6545\u4e8b\uff0c\u4f5c\u8005\u90fd\u559c\u6b22\u628a\u706b\u661f\u89c6\u4e3a\u813e\u6c14\u66b4\u8e81\u7684\u90bb\u5c45\uff0c\u4e00\u8a00\u4e0d\u5408\u5c31\u8981\u73a9\u8f6c\u5730\u7403\u3002\u4f46\u6bcf\u5f53\u5730\u7403\u5c06\u88ab\u63a8\u5012\u7684\u5173\u952e\u65f6\u523b\uff0c\u706b\u661f\u4eba\u7adf\u7136\u6279\u91cf\u6251\u8857\uff0c\u539f\u56e0\u662f\u6c34\u571f\u4e0d\u670d\u88ab\u5730\u7403\u7ec6\u83cc\u611f\u67d3\uff0c\u6700\u7ec8\u573a\u9762\u53d8\u6210\u4eba\u6c11\u7fa4\u4f17\u54c4\u62a2\u6563\u843d\u5728\u5730\u4e0a\u7684\u516b\u722a\u9c7c\u6e29\u99a8\u7ed3\u5c3e\u3002\u8fd9\u4e9b\u5957\u8def\u7ed9\u6211\u7559\u4e0b\u6df1\u523b\u5370\u8c61\uff0c\u7279\u522b\u2026"</span>,
+  <span class="string">"reviewingCommentsCount"</span>: 0,
+  <span class="string">"meta"</span>: {
+    <span class="string">"previous"</span>: {
+      <span class="string">"isTitleImageFullScreen"</span>: <span class="literal">false</span>,
+      <span class="string">"rating"</span>: <span class="string">"none"</span>,
+      <span class="string">"titleImage"</span>: <span class="string">"https://pic2.zhimg.com/263519b85474c577e78809849f6e1761_r.jpg"</span>,
+      <span class="string">"links"</span>: {
+        <span class="string">"comments"</span>: <span class="string">"/api/posts/20694237/comments"</span>
+      },
+      <span class="string">"topics"</span>: [
+        {
+          <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19588459"</span>,
+          <span class="string">"id"</span>: <span class="string">"19588459"</span>,
+          <span class="string">"name"</span>: <span class="string">"\u8bc8\u9a97"</span>
+        },
+        {
+          <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19905972"</span>,
+          <span class="string">"id"</span>: <span class="string">"19905972"</span>,
+          <span class="string">"name"</span>: <span class="string">"\u4f2a\u57fa\u7ad9"</span>
+        },
+        {
+          <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com/topic/19558642"</span>,
+          <span class="string">"id"</span>: <span class="string">"19558642"</span>,
+          <span class="string">"name"</span>: <span class="string">"\u9ed1\u5ba2 (Hacker)"</span>
+        }
+      ],
+      <span class="string">"href"</span>: <span class="string">"/api/posts/20694237"</span>,
+      <span class="string">"author"</span>: {
+        <span class="string">"profileUrl"</span>: <span class="string">"https://www.zhihu.com/people/fenggou"</span>,
+        <span class="string">"bio"</span>: <span class="string">"\u4fe1\u606f\u5b89\u5168\uff0c\u9e21\u5c3e\u9152\uff0c\u7535\u5409\u4ed6\uff0c\u6444\u5f71\u3002"</span>,
+        <span class="string">"hash"</span>: <span class="string">"1e373c5c6d9af3c8beaeb9aadc0890ac"</span>,
+        <span class="string">"name"</span>: <span class="string">"fenggou"</span>,
+        <span class="string">"isOrg"</span>: <span class="literal">false</span>,
+        <span class="string">"slug"</span>: <span class="string">"fenggou"</span>,
+        <span class="string">"avatar"</span>: {
+          <span class="string">"id"</span>: <span class="string">"939c20127"</span>,
+          <span class="string">"template"</span>: <span class="string">"https://pic4.zhimg.com/{id}_{size}.jpg"</span>
+        },
+        <span class="string">"description"</span>: <span class="string">"\u5199\u6587\u5b57\u5bf9\u4e8e\u6211\u6765\u8bf4\u633a\u75db\u82e6\u7684\u3002"</span>
+      },
+      <span class="string">"column"</span>: {
+        <span class="string">"slug"</span>: <span class="string">"wooyun"</span>,
+        <span class="string">"name"</span>: <span class="string">"\u4e4c\u4e91\u541b"</span>
+      },
+      <span class="string">"content"</span>: <span class="string">"内容太长不予显示"</span>,
+      <span class="string">"state"</span>: <span class="string">"published"</span>,
+      <span class="string">"sourceUrl"</span>: <span class="string">""</span>,
+      <span class="string">"pageCommentsCount"</span>: 0,
+      <span class="string">"canComment"</span>: <span class="literal">false</span>,
+      <span class="string">"snapshotUrl"</span>: <span class="string">""</span>,
+      <span class="string">"slug"</span>: 20694237,
+      <span class="string">"publishedTime"</span>: <span class="string">"2016-04-07T16:50:52+08:00"</span>,
+      <span class="string">"url"</span>: <span class="string">"/p/20694237"</span>,
+      <span class="string">"title"</span>: <span class="string">"\u6df1\u5ea6\u63ed\u79d8\uff1a\u4f2a\u57fa\u7ad9\u77ed\u4fe1\u8bc8\u9a97\u4ea7\u4e1a\u4f20\u5947\u59cb\u672b\uff01"</span>,
+      <span class="string">"summary"</span>: <span class="string">"&lt;b&gt;\u672c\u6587\u611f\u8c22\u4e4c\u4e91Drops\u56e2\u961f\u63d0\u4f9b\u7684\u60c5\u62a5\u652f\u6301\uff01&lt;/b&gt;\u8fd1\u4e9b\u5e74\u56e0\u4f2a\u57fa\u7ad9\u77ed\u4fe1\u8bc8\u9a97\u7684\u5d1b\u8d77\u5bf9\u7528\u6237\u9020\u6210\u4e86\u60e8\u75db\u7684\u7ecf\u6d4e\u635f\u5931\uff0c\u5982\u4eca\u76f8\u5173\u90e8\u95e8\u4e25\u6253\u4f2a\u57fa\u7ad9\u77ed\u4fe1\u8bc8\u9a97\u884c\u4e1a\u5df2\u53d6\u5f97\u521d\u6b65\u6210\u6548\uff0c\u4f46\u4ecd\u6709\u9ed1\u4ea7\u56e2\u4f19\u94e4\u800c\u8d70\u9669\u7ee7\u7eed\u4f5c\u6848\uff0c\u5bfc\u81f4\u76d7\u5237\u4e8b\u4ef6\u8fd8\u662f\u4e0d\u65ad\u6d8c\u73b0\u3002\u4e4c\u4e91\u541b\u548c\u884c\u4e1a\u90fd\u66fe\u62a5\u9053\u8fc7\u4e00\u4e9b\u4f2a\u57fa\u7ad9\u8bc8\u9a97\u2026"</span>,
+      <span class="string">"reviewingCommentsCount"</span>: 0,
+      <span class="string">"meta"</span>: {
+        <span class="string">"previous"</span>: null,
+        <span class="string">"next"</span>: null
+      },
+      <span class="string">"commentPermission"</span>: <span class="string">"anyone"</span>,
+      <span class="string">"commentsCount"</span>: 0,
+      <span class="string">"likesCount"</span>: 0
+    },
+    <span class="string">"next"</span>: null
+  },
+  <span class="string">"commentPermission"</span>: <span class="string">"anyone"</span>,
+  <span class="string">"commentsCount"</span>: 57,
+  <span class="string">"likesCount"</span>: 558
+}
+</code></pre>
+<p>上面的一些字段不需要解释了。值得注意的是：<br>meta中的previous：     应该是指的前一篇文章（这里的逻辑不是很清楚）<br>meta中的next：         应该是指的之后一篇文章  </p>
+<p>至此，专栏的API以及全部知道了。接下来就是如何编码实现了。  </p>
+<h2 id="编写客户端思路"><a href="#编写客户端思路" class="headerlink" title="编写客户端思路"></a>编写客户端思路</h2><p>根据上面的API分析，可以得知，应该创建以下几个Java Bean：  </p>
+<ul>
+<li>Column —— 专栏  </li>
+<li>Article —— 文章  </li>
+<li>Author(Creator) —— 作者  </li>
+<li>Avatar —— 头像  </li>
+<li>Topic —— 话题  </li>
+<li>其他你所需要的  </li>
+</ul>
+<p>写完Java Bean之后，接下来的任务就是根据API发送Http请求，解析返回的JSON数据，映射到Java Bean中，然后将Java Bean携带的数据<br>用适配器适配到UI。大致的工作就是这样。<br>我的想法是，使用OKHttp、Gson、Retrofit三个三方库一起实现。这三个库我也没用过，正在研究中。<br>另：<br>这个客户端的编写我已经完成了UI部分，Java Bean也写好了，接下来就是数据操作这一块。<br>项目已经放到Github： <a href="https://github.com/StupidL/ZhiHuColumn" target="_blank" rel="external">StupidL</a><br>欢迎大家fork。  </p>
+<h2 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h2><p>luozhouyang0528@gmail.com  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="cis4mw62o00086u0wn05xilqn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/30/Java_Interface/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java Interface</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/21/ZhiHuColumn_API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/30/Java_Interface/">Java Interface</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/02/regular_expressions/">Java正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/Java_String_StringBuilder/">Java中的字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/29/GitBranch/">Git的分支与合并</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 StupidL<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
