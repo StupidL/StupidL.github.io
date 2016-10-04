@@ -64,6 +64,199 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android_MVP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/02/Android_MVP/" class="article-date">
+  <time datetime="2016-10-02T11:13:00.000Z" itemprop="datePublished">2016-10-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/02/Android_MVP/">Android MVP模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MVP即Model、View和Presenter。<br>使用MVP的模式可以使得Model和View层解耦，他们之间的交互通过Presenter来进行。  </p>
+<p>可以这样看：  </p>
+<ul>
+<li>Model层负责具体业务逻辑的实现，比如网络接发数据，数据库操作等等  </li>
+<li>View层负责与用户的交互以及界面的更新  </li>
+<li>Presenter层负责逻辑分发，根据View层的不同命令，与Model交互，并将结果返回给View。  </li>
+</ul>
+<p>这样就达到了View与Model解耦的效果。<br>以下根据我的实际项目来讲解MVP模式。这个项目刚刚开始，远还没有完成，但是我一开始就是根据MVP模式来设计的，因此很有参考意义。<br>当然我也是第一次在项目中使用MVP模式，有错误的地方还请指出。项目开源在Github：[EmbeddedTool]:<a href="https://github.com/StupidL/EmbeddedTool" target="_blank" rel="external">https://github.com/StupidL/EmbeddedTool</a>  </p>
+<h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>这个项目主要是为了与嵌入式设备进行交互，可以很容易地通过控件组合来完成各种功能。与嵌入式设备的数据传输通过蓝牙或者wifi。<br>目前已经完成了一下一个基本控件：  </p>
+<ul>
+<li>发送类型的按钮，可以直接发送某种命令或者与其他控件结合使用    </li>
+<li>接收类型的按钮，可以直接接收数据或者与其他控件组合使用</li>
+<li>文本框，用来显示发送的数据或者接收的数据，可以绑定两种类型的按钮一起工作  </li>
+<li>编辑框，发送某些数据，可以绑定一个发送类型的按钮一起工作  </li>
+</ul>
+<p>以下一按钮功能的实现为例。  </p>
+<h2 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h2><p>Model层：  </p>
+<ul>
+<li>定义一个INetModel接口，声明网络接收数据的各种操作  </li>
+<li>定义一个NetModelImpl实现类，实现上述接口  </li>
+</ul>
+<pre><code class="bash">public interface INetModel{
+    void sendDataOverButton(String s);
+    String receiveDataOverButton();
+}
+</code></pre>
+<pre><code class="bash">public NetModelImpl implements INetModel{
+    @Override
+    public void sendDataOverButton(String s){
+        //...
+    }
+    @Override
+    public String <span class="function"><span class="title">receiveDataOverButton</span></span>(){
+        //...
+    }
+}
+</code></pre>
+<p>View层：  </p>
+<ul>
+<li>定义一个接口，声明用户交互和界面更新所需要的操作  </li>
+<li>在对应的Activity(不一定是Activity)实现上述接口  </li>
+</ul>
+<pre><code class="bash">public interface IMainView{
+    void addButton();
+    void removeButton(Button button);
+}
+</code></pre>
+<pre><code class="bash">public class MainActivity extends AppCompatActivity implements IMainView{
+    //...life circle methods
+
+    @Override
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+
+    @Override
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>以上两层写好之后，问题来了：我从Model层接收的数据该如何显示到View层？我要把View层的数据通过网络发送出去该怎么办？<br>这正是Presenter该做的事情！  </p>
+<p>Presenter层：  </p>
+<ul>
+<li>定义一个MainPresenter类，来分发各种逻辑  </li>
+</ul>
+<pre><code class="bash">public class MainPresenter{
+    public void sendData(String s){
+        //...
+    }
+    public String <span class="function"><span class="title">receiveData</span></span>(){
+        //...
+    }
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>以上只是一个框架，那么Presenter里面的各种方法该如何实现呢？换句话说，presenter该如何与model和view联系起来呢？<br>具体的做法是：presenter里面持有view和model两个成员变量！并且在构造器重初始化这两个成员！！！<br>所以，我们的presenter就变成了以下这个样子：  </p>
+<pre><code class="bash">public class MainPresenter{
+    private IMainView iMainView;
+    private INetModel inetModel;
+    public MainPresenter(IMainView view){
+        iMainView = view;
+        inetModel = new NetModelImpl();
+    }
+    public void sendData(String s){
+        inetModel.sendDataOverButton(s);
+        //...other operations
+    }
+    public String <span class="function"><span class="title">receiveData</span></span>(){
+        //...other operations
+        <span class="built_in">return</span> inetModel.receiveDataOverButton();
+    }
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        iMainView.addButton();
+        //...other operations
+    }
+    public void removeButton(Button button){
+        iMainView.removeButton(button);
+        //...other operations
+    }
+}
+</code></pre>
+<p>现在，新的问题来了：我没看到View层和Presenter的具体联系啊，他们怎么进行交互呢？<br>我们知道View与Presenter的交互是双向的。或许你已经发现了，在Presenter的构造器里，有一个IMainView参数。<br>如果你还记得我们的MainActivity实现了IMainView接口，那你就懂了！也就是说，我们的Presenter持有MainActivity的<br>一个引用！这就意味着Presenter可以访问View！<br>那么View该如何访问Presenter呢？同样的办法，将presenter作为View的一个成员变量就可以了！<br>因此我们的Activity变成了下面这个样子：  </p>
+<pre><code class="bash">public class MainActivity extends AppCompatActivity implements IMainView{
+
+    private MainPresenter mPresenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        mPresenter = new MainPresenter(this);
+
+        //...
+
+        //add a button by another button.
+        Button button = new Button(this);
+        button.setOnClickListener(new OnClickListener{
+            @Override
+            public void onClick(View view){
+                //just show that you can use presenter to finish some <span class="built_in">jobs</span> rather than view itself.
+                mPresenter.addButton();
+                mPresenter.sendDataOverButton(<span class="string">"..."</span>);
+            }
+        });
+
+        //remove a button by another button.
+        Button button2 = new Button(this);
+        button2.setOnClickListener(new OnClickListener{
+            @Override
+            public void onClick(View view){
+                mPresenter.removeButton(button);    //arg button should be found first.
+            }
+        });
+    }
+
+    //...other life circle methods
+
+    @Override
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+
+    @Override
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>至此，已经完成了一个简单的MVP模式示例。希望对大家有帮助！  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="citv6ddag0000yj0wakdjnbqj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ZhiHuColumn_API" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/21/ZhiHuColumn_API/" class="article-date">
@@ -622,7 +815,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="cis49qd6h0009wq0wdfvmq8rq" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="citv6ddbm000dyj0w99imuj05" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -747,7 +940,7 @@ interface D extends A, C{}
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="cis49qd6b0006wq0w8y8p3ew9" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="citv6ddb80008yj0wegqxmzdb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -898,12 +1091,12 @@ interface D extends A, C{}
 <li>搜索</li>
 </ul>
 <hr>
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#108;&#x75;&#x6f;&#x7a;&#104;&#111;&#117;&#x79;&#97;&#110;&#103;&#48;&#53;&#50;&#56;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#108;&#x75;&#x6f;&#x7a;&#104;&#111;&#117;&#x79;&#97;&#110;&#103;&#48;&#53;&#50;&#56;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a>  </p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6c;&#x75;&#x6f;&#122;&#x68;&#x6f;&#x75;&#x79;&#97;&#110;&#x67;&#48;&#53;&#x32;&#56;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x6c;&#x75;&#x6f;&#122;&#x68;&#x6f;&#x75;&#x79;&#97;&#110;&#x67;&#48;&#53;&#x32;&#56;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;</a>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="cis49qd6w000ewq0wsbr8ocvq" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="citv6ddbr000fyj0w5szmlmcx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -946,7 +1139,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="cis49qd6f0008wq0w4a5lp272" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="citv6ddbf000cyj0w0vus2945" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1016,7 +1209,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="cis49qd5w0001wq0wgxf4f8f8" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="citv6ddao0001yj0wbvqdntb0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
@@ -1100,7 +1293,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="cis49qd680004wq0w2mgzg25i" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="citv6ddb00004yj0w69gpr6rt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
@@ -1193,7 +1386,7 @@ Thread_2.mThreadLocal = null
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/Handler/" data-id="cis49qd650003wq0w9ts1sesv" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/Handler/" data-id="citv6ddb30006yj0w6dj15bty" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -1299,7 +1492,7 @@ Thread_2.mThreadLocal = null
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="cis49qd5m0000wq0wtq50mtma" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="citv6ddax0003yj0wh9vkkook" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -1348,7 +1541,7 @@ Thread_2.mThreadLocal = null
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/vim-with-markdown/" data-id="cis49qd6z000hwq0wjlst2cab" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/vim-with-markdown/" data-id="citv6ddbt000hyj0wy4pxs9h9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
@@ -1360,52 +1553,11 @@ Thread_2.mThreadLocal = null
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/26/hello-world/" class="article-date">
-  <time datetime="2016-06-26T05:12:31.233Z" itemprop="datePublished">2016-06-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/26/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/hello-world/" data-id="cis49qd6p000cwq0w6mrch9xg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -1417,7 +1569,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
     </div>
   </div>
 
@@ -1427,7 +1579,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
     </div>
   </div>
 
@@ -1436,7 +1588,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1447,6 +1599,10 @@ Thread_2.mThreadLocal = null
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/10/02/Android_MVP/">Android MVP模式</a>
+          </li>
         
           <li>
             <a href="/2016/08/21/ZhiHuColumn_API/">知乎专栏最新API</a>
@@ -1462,10 +1618,6 @@ Thread_2.mThreadLocal = null
         
           <li>
             <a href="/2016/06/30/Java_String_StringBuilder/">Java中的字符串</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/29/GitBranch/">Git的分支与合并</a>
           </li>
         
       </ul>

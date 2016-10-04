@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android MVP模式 | StupidL&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MVP即Model、View和Presenter。使用MVP的模式可以使得Model和View层解耦，他们之间的交互通过Presenter来进行。  
+可以这样看：  
+
+Model层负责具体业务逻辑的实现，比如网络接发数据，数据库操作等等  
+View层负责与用户的交互以及界面的更新  
+Presenter层负责逻辑分发，根据View层的不同命令，与Model交互，并将结果返回给View。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android MVP模式">
+<meta property="og:url" content="http://stupidme.me/2016/10/02/Android_MVP/index.html">
+<meta property="og:site_name" content="StupidL's Blog">
+<meta property="og:description" content="MVP即Model、View和Presenter。使用MVP的模式可以使得Model和View层解耦，他们之间的交互通过Presenter来进行。  
+可以这样看：  
+
+Model层负责具体业务逻辑的实现，比如网络接发数据，数据库操作等等  
+View层负责与用户的交互以及界面的更新  
+Presenter层负责逻辑分发，根据View层的不同命令，与Model交互，并将结果返回给View。">
+<meta property="og:updated_time" content="2016-10-04T07:39:06.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android MVP模式">
+<meta name="twitter:description" content="MVP即Model、View和Presenter。使用MVP的模式可以使得Model和View层解耦，他们之间的交互通过Presenter来进行。  
+可以这样看：  
+
+Model层负责具体业务逻辑的实现，比如网络接发数据，数据库操作等等  
+View层负责与用户的交互以及界面的更新  
+Presenter层负责逻辑分发，根据View层的不同命令，与Model交互，并将结果返回给View。">
+  
+    <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StupidL&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stupidme.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Android_MVP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/02/Android_MVP/" class="article-date">
+  <time datetime="2016-10-02T11:13:00.000Z" itemprop="datePublished">2016-10-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android MVP模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MVP即Model、View和Presenter。<br>使用MVP的模式可以使得Model和View层解耦，他们之间的交互通过Presenter来进行。  </p>
+<p>可以这样看：  </p>
+<ul>
+<li>Model层负责具体业务逻辑的实现，比如网络接发数据，数据库操作等等  </li>
+<li>View层负责与用户的交互以及界面的更新  </li>
+<li>Presenter层负责逻辑分发，根据View层的不同命令，与Model交互，并将结果返回给View。  </li>
+</ul>
+<p>这样就达到了View与Model解耦的效果。<br>以下根据我的实际项目来讲解MVP模式。这个项目刚刚开始，远还没有完成，但是我一开始就是根据MVP模式来设计的，因此很有参考意义。<br>当然我也是第一次在项目中使用MVP模式，有错误的地方还请指出。项目开源在Github：[EmbeddedTool]:<a href="https://github.com/StupidL/EmbeddedTool" target="_blank" rel="external">https://github.com/StupidL/EmbeddedTool</a>  </p>
+<h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>这个项目主要是为了与嵌入式设备进行交互，可以很容易地通过控件组合来完成各种功能。与嵌入式设备的数据传输通过蓝牙或者wifi。<br>目前已经完成了一下一个基本控件：  </p>
+<ul>
+<li>发送类型的按钮，可以直接发送某种命令或者与其他控件结合使用    </li>
+<li>接收类型的按钮，可以直接接收数据或者与其他控件组合使用</li>
+<li>文本框，用来显示发送的数据或者接收的数据，可以绑定两种类型的按钮一起工作  </li>
+<li>编辑框，发送某些数据，可以绑定一个发送类型的按钮一起工作  </li>
+</ul>
+<p>以下一按钮功能的实现为例。  </p>
+<h2 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h2><p>Model层：  </p>
+<ul>
+<li>定义一个INetModel接口，声明网络接收数据的各种操作  </li>
+<li>定义一个NetModelImpl实现类，实现上述接口  </li>
+</ul>
+<pre><code class="bash">public interface INetModel{
+    void sendDataOverButton(String s);
+    String receiveDataOverButton();
+}
+</code></pre>
+<pre><code class="bash">public NetModelImpl implements INetModel{
+    @Override
+    public void sendDataOverButton(String s){
+        //...
+    }
+    @Override
+    public String <span class="function"><span class="title">receiveDataOverButton</span></span>(){
+        //...
+    }
+}
+</code></pre>
+<p>View层：  </p>
+<ul>
+<li>定义一个接口，声明用户交互和界面更新所需要的操作  </li>
+<li>在对应的Activity(不一定是Activity)实现上述接口  </li>
+</ul>
+<pre><code class="bash">public interface IMainView{
+    void addButton();
+    void removeButton(Button button);
+}
+</code></pre>
+<pre><code class="bash">public class MainActivity extends AppCompatActivity implements IMainView{
+    //...life circle methods
+
+    @Override
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+
+    @Override
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>以上两层写好之后，问题来了：我从Model层接收的数据该如何显示到View层？我要把View层的数据通过网络发送出去该怎么办？<br>这正是Presenter该做的事情！  </p>
+<p>Presenter层：  </p>
+<ul>
+<li>定义一个MainPresenter类，来分发各种逻辑  </li>
+</ul>
+<pre><code class="bash">public class MainPresenter{
+    public void sendData(String s){
+        //...
+    }
+    public String <span class="function"><span class="title">receiveData</span></span>(){
+        //...
+    }
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>以上只是一个框架，那么Presenter里面的各种方法该如何实现呢？换句话说，presenter该如何与model和view联系起来呢？<br>具体的做法是：presenter里面持有view和model两个成员变量！并且在构造器重初始化这两个成员！！！<br>所以，我们的presenter就变成了以下这个样子：  </p>
+<pre><code class="bash">public class MainPresenter{
+    private IMainView iMainView;
+    private INetModel inetModel;
+    public MainPresenter(IMainView view){
+        iMainView = view;
+        inetModel = new NetModelImpl();
+    }
+    public void sendData(String s){
+        inetModel.sendDataOverButton(s);
+        //...other operations
+    }
+    public String <span class="function"><span class="title">receiveData</span></span>(){
+        //...other operations
+        <span class="built_in">return</span> inetModel.receiveDataOverButton();
+    }
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        iMainView.addButton();
+        //...other operations
+    }
+    public void removeButton(Button button){
+        iMainView.removeButton(button);
+        //...other operations
+    }
+}
+</code></pre>
+<p>现在，新的问题来了：我没看到View层和Presenter的具体联系啊，他们怎么进行交互呢？<br>我们知道View与Presenter的交互是双向的。或许你已经发现了，在Presenter的构造器里，有一个IMainView参数。<br>如果你还记得我们的MainActivity实现了IMainView接口，那你就懂了！也就是说，我们的Presenter持有MainActivity的<br>一个引用！这就意味着Presenter可以访问View！<br>那么View该如何访问Presenter呢？同样的办法，将presenter作为View的一个成员变量就可以了！<br>因此我们的Activity变成了下面这个样子：  </p>
+<pre><code class="bash">public class MainActivity extends AppCompatActivity implements IMainView{
+
+    private MainPresenter mPresenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        mPresenter = new MainPresenter(this);
+
+        //...
+
+        //add a button by another button.
+        Button button = new Button(this);
+        button.setOnClickListener(new OnClickListener{
+            @Override
+            public void onClick(View view){
+                //just show that you can use presenter to finish some <span class="built_in">jobs</span> rather than view itself.
+                mPresenter.addButton();
+                mPresenter.sendDataOverButton(<span class="string">"..."</span>);
+            }
+        });
+
+        //remove a button by another button.
+        Button button2 = new Button(this);
+        button2.setOnClickListener(new OnClickListener{
+            @Override
+            public void onClick(View view){
+                mPresenter.removeButton(button);    //arg button should be found first.
+            }
+        });
+    }
+
+    //...other life circle methods
+
+    @Override
+    public void <span class="function"><span class="title">addButton</span></span>(){
+        //...
+    }
+
+    @Override
+    public void removeButton(Button button){
+        //...
+    }
+}
+</code></pre>
+<p>至此，已经完成了一个简单的MVP模式示例。希望对大家有帮助！  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="citv6ddag0000yj0wakdjnbqj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/21/ZhiHuColumn_API/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">知乎专栏最新API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/02/Android_MVP/">Android MVP模式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/21/ZhiHuColumn_API/">知乎专栏最新API</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/30/Java_Interface/">Java Interface</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/02/regular_expressions/">Java正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/Java_String_StringBuilder/">Java中的字符串</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 StupidL<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
