@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>当我们编写并运行“Hello World”的时候，电脑到底发生了什么？ | StupidL&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文是笔者在阅读CSAPP（《深入理解计算机系统》）一书时整理出来的。希望对大家有所帮助。
+编写源代码我们从源代码的编写开始。用任何一个你喜欢的文本编辑器，用C语言写出我们经典的Hello World程序。
+123456#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&quot;hello, world\n&quot;);&amp;#125;
+保存上述文件为“hello.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当我们编写并运行“Hello World”的时候，电脑到底发生了什么？">
+<meta property="og:url" content="http://stupidme.me/2016/10/10/Hello_World/index.html">
+<meta property="og:site_name" content="StupidL's Blog">
+<meta property="og:description" content="本文是笔者在阅读CSAPP（《深入理解计算机系统》）一书时整理出来的。希望对大家有所帮助。
+编写源代码我们从源代码的编写开始。用任何一个你喜欢的文本编辑器，用C语言写出我们经典的Hello World程序。
+123456#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&quot;hello, world\n&quot;);&amp;#125;
+保存上述文件为“hello.">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_gcc.png">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_compile.png">
+<meta property="og:image" content="http://stupidme.me/images/hello_run.png">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2.png">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_2.png">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_3.png">
+<meta property="og:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_4.png">
+<meta property="og:updated_time" content="2016-10-12T15:28:36.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="当我们编写并运行“Hello World”的时候，电脑到底发生了什么？">
+<meta name="twitter:description" content="本文是笔者在阅读CSAPP（《深入理解计算机系统》）一书时整理出来的。希望对大家有所帮助。
+编写源代码我们从源代码的编写开始。用任何一个你喜欢的文本编辑器，用C语言写出我们经典的Hello World程序。
+123456#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&quot;hello, world\n&quot;);&amp;#125;
+保存上述文件为“hello.">
+<meta name="twitter:image" content="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_gcc.png">
+  
+    <link rel="alternate" href="/atom.xml" title="StupidL&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StupidL&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stupidme.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hello_World" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/10/Hello_World/" class="article-date">
+  <time datetime="2016-10-10T15:02:03.000Z" itemprop="datePublished">2016-10-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      当我们编写并运行“Hello World”的时候，电脑到底发生了什么？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文是笔者在阅读CSAPP（《深入理解计算机系统》）一书时整理出来的。希望对大家有所帮助。</p>
+<h2 id="编写源代码"><a href="#编写源代码" class="headerlink" title="编写源代码"></a>编写源代码</h2><p>我们从源代码的编写开始。用任何一个你喜欢的文本编辑器，用C语言写出我们经典的Hello World程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello, world\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>保存上述文件为“hello.c”，我们就得到了<strong>源文件</strong>。<br>我们的源文件实际上是一个由”0”和”1”组成的位(bit)序列，每8个位组成一组，称为<strong>字节</strong>（byte)。源文件中的每一个字符，都由一个确定的字节所表示。<br>我们使用ASCII编码来讲述。关于ASCII、Unicode、UTF-8编码的区别，请参考这篇博客：<a href="http://www.cnblogs.com/kingstarspe/p/ASCII.html" target="_blank" rel="external">http://www.cnblogs.com/kingstarspe/p/ASCII.html</a><br>举个例子，我们源文件中，第一个字符是”#”，它的ASCII码是”35”，表示成8位”0”和”1”就是“00010011”(高位在左)。计算机给每一个字符都采用上述方式进行编码，我们就可以得到这样一串数据：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">0</th>
+<th>1</th>
+<th style="text-align:center">2</th>
+<th>3</th>
+<th style="text-align:center">4</th>
+<th>5</th>
+<th style="text-align:center">6</th>
+<th>7</th>
+<th style="text-align:center">8</th>
+<th>9</th>
+<th style="text-align:center">10</th>
+<th>11</th>
+<th style="text-align:center">12</th>
+<th>13</th>
+<th style="text-align:center">14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">#</td>
+<td>i</td>
+<td style="text-align:center">n</td>
+<td>c</td>
+<td style="text-align:center">l</td>
+<td>u</td>
+<td style="text-align:center">d</td>
+<td>e</td>
+<td style="text-align:center"><sp></sp></td>
+<td>&lt;</td>
+<td style="text-align:center">s</td>
+<td>t</td>
+<td style="text-align:center">d</td>
+<td>i</td>
+<td style="text-align:center">o</td>
+<td>.</td>
+</tr>
+<tr>
+<td style="text-align:center">35</td>
+<td>105</td>
+<td style="text-align:center">110</td>
+<td>99</td>
+<td style="text-align:center">108</td>
+<td>117</td>
+<td style="text-align:center">100</td>
+<td>101</td>
+<td style="text-align:center">32</td>
+<td>60</td>
+<td style="text-align:center">115</td>
+<td>116</td>
+<td style="text-align:center">100</td>
+<td>105</td>
+<td style="text-align:center">111</td>
+<td>46</td>
+</tr>
+<tr>
+<td style="text-align:center">h</td>
+<td>&gt;</td>
+<td style="text-align:center">\n</td>
+<td>\n</td>
+<td style="text-align:center">i</td>
+<td>n</td>
+<td style="text-align:center">t</td>
+<td><sp></sp></td>
+<td style="text-align:center">m</td>
+<td>a</td>
+<td style="text-align:center">i</td>
+<td>n</td>
+<td style="text-align:center">(</td>
+<td>)</td>
+<td style="text-align:center">\n</td>
+<td>{</td>
+</tr>
+<tr>
+<td style="text-align:center">104</td>
+<td>62</td>
+<td style="text-align:center">10</td>
+<td>10</td>
+<td style="text-align:center">105</td>
+<td>110</td>
+<td style="text-align:center">116</td>
+<td>32</td>
+<td style="text-align:center">109</td>
+<td>97</td>
+<td style="text-align:center">105</td>
+<td>110</td>
+<td style="text-align:center">40</td>
+<td>41</td>
+<td style="text-align:center">10</td>
+<td>123</td>
+</tr>
+<tr>
+<td style="text-align:center">\n</td>
+<td><sp></sp></td>
+<td style="text-align:center"><sp></sp></td>
+<td><sp></sp></td>
+<td style="text-align:center"><sp></sp></td>
+<td>p</td>
+<td style="text-align:center">r</td>
+<td>i</td>
+<td style="text-align:center">n</td>
+<td>t</td>
+<td style="text-align:center">f</td>
+<td>(</td>
+<td style="text-align:center">“</td>
+<td>h</td>
+<td style="text-align:center">e</td>
+<td>l</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td>32</td>
+<td style="text-align:center">32</td>
+<td>32</td>
+<td style="text-align:center">32</td>
+<td>112</td>
+<td style="text-align:center">114</td>
+<td>105</td>
+<td style="text-align:center">110</td>
+<td>116</td>
+<td style="text-align:center">102</td>
+<td>40</td>
+<td style="text-align:center">34</td>
+<td>104</td>
+<td style="text-align:center">101</td>
+<td>108</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>o</td>
+<td style="text-align:center">,</td>
+<td><sp></sp></td>
+<td style="text-align:center">w</td>
+<td>o</td>
+<td style="text-align:center">r</td>
+<td>l</td>
+<td style="text-align:center">d</td>
+<td></td>
+<td style="text-align:center">n</td>
+<td>“</td>
+<td style="text-align:center">)</td>
+<td>;</td>
+<td style="text-align:center">\n</td>
+<td>}</td>
+</tr>
+<tr>
+<td style="text-align:center">108</td>
+<td>111</td>
+<td style="text-align:center">44</td>
+<td>32</td>
+<td style="text-align:center">119</td>
+<td>111</td>
+<td style="text-align:center">114</td>
+<td>108</td>
+<td style="text-align:center">100</td>
+<td>92</td>
+<td style="text-align:center">110</td>
+<td>34</td>
+<td style="text-align:center">41</td>
+<td>59</td>
+<td style="text-align:center">10</td>
+<td>125</td>
+</tr>
+</tbody>
+</table>
+<p>hello.c的表示方法说明了一个基本的思想：<strong>系统中所有的信息——包括磁盘文件、存储器中的程序、存储器中存放的用户数据以及网络上传送的数据，都是由一串位标识的。</strong> 我们区分数据所表示的对象要根据上下文。比如，同一个字节序列，在不同的上下文中，可能表示一个整数、浮点数、字符串或者机器指令。</p>
+<h2 id="编译成可执行文件"><a href="#编译成可执行文件" class="headerlink" title="编译成可执行文件"></a>编译成可执行文件</h2><p>从源文件转化为可执行目标文件是由编译器驱动程序完成的。以linux系统为例，我们可以这样做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc -o hello hello.c</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_gcc.png" alt="Hello"></p>
+<p>在这里，GCC编译器驱动程序读取源文件hello.c，并且把它翻译成一个可执行文件hello。这整个过程可分为以下几个阶段：  </p>
+<ul>
+<li><strong>预处理阶段：</strong><br>预处理器根据以字符“#”开头的命令，修改原始的程序。在我们的程序中，就是根据“#include <stdio.h>”命令，预处理器读取系统头文件”stdio.h”的内容，并将它直接插入到我们的程序中。这样就得到了另一个程序，这个程序通常以”.i”为扩展名保存。  </stdio.h></li>
+<li><strong>编译阶段：</strong> 编译器将文本文件”hello.i”翻译成另一个文本文件”hello.s”，它的内容是一个<strong>汇编程序</strong>。汇编程序中的每一条语句都以一种标准的文本格式确切的描述一条低级机器语言指令。  </li>
+<li><strong>汇编阶段：</strong><br>汇编器将”hello.s”翻译成机器语言指令，将这些指令打包成 <strong>可重定位目标程序(relocatable object program)</strong> 的格式，并将结果保存在目标文件”hello.o”中。”hello.o”文件是一个二进制文件，它的字节编码是机器语言指令而不是字符。  </li>
+<li><p><strong>链接阶段：</strong><br>我们最开始编写的源代码中，调用了一个”printf”函数，它是标准C库里面的函数。”printf”函数存在于一个名为”printf.o”的已经单独编译好的目标文件中。 <strong>链接器</strong> 的作用就是合并”printf.o”文件到”hello.o”文件中。结果的到”hello”文件，他是一个 <strong>可执行目标文件</strong> ，可以被加载到内存中，由系统执行。  </p>
+<p>放一张流程图：<br><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_compile.png" alt="编译过程">  </p>
+</li>
+</ul>
+<p>我们的”hello world”程序的整个编译阶段就到此为止了。但是对于一些比较复杂的项目，你可能还需要注意以下几点：  </p>
+<ul>
+<li>优化程序性能  </li>
+<li>理解链接时出现的错误  </li>
+<li>避免安全漏洞</li>
+</ul>
+<h2 id="计算机执行程序"><a href="#计算机执行程序" class="headerlink" title="计算机执行程序"></a>计算机执行程序</h2><p>这是最复杂的一个步骤，也是最精秒的一个步骤。 我们首先看看我们的程序执行的结果是什么：<br><img src="images/hello_run.png" alt="run"></p>
+<p>很简单，就是在shell(一个命令行解释器)中输入”./hello”，然后shell会判断这个命令第一个单词是否是内置的命令，如果不是，shell会假设这是一个可执行文件的名字，并且将它加载、运行，同时将结果显示在屏幕上。结束这个程序后，shell会输出新的提示符，等待下一条命令。<br>要了解这一过程中，计算机到底做了什么，首先我们要了解计算机的硬件组成。</p>
+<h3 id="系统的硬件组成"><a href="#系统的硬件组成" class="headerlink" title="系统的硬件组成"></a>系统的硬件组成</h3><p>重新画了一张书上的图片：<br><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2.png" alt="system"><br>简单介绍一下上述几个概念：  </p>
+<ul>
+<li><strong>总线</strong><br>总线式贯穿整个系统的一组电子管道。它携带信息字节并且在各个部件之间传递。总线被设计成传送定长的字节块，称为<strong>字</strong>(word)。  </li>
+<li><strong>I/O设备</strong><br>I/O设备即 <strong>输入/输出设备</strong> 。上图包括四个I/O设备：鼠标、键盘、显示器、磁盘。每个设备都通过一个 <strong>控制器/适配器</strong> 与I/O总线相连。控制器和适配器的主要区别就是：控制器是封装在主板上的芯片组，适配器则是主板插槽上的卡。  </li>
+<li><strong>主存储器</strong><br>主存储器(主存)是一个临时存储设备，程序执行时，用来存放程序以及程序处理的数据。主存由一组 <strong>动态随机存取存储器(DRAM)</strong> 芯片组成的，可看成线性的字节数组，每个字节都有一个唯一的地址。  </li>
+<li><strong>处理器</strong><br>中央处理单元(CPU)简称处理器。是解释(或执行)存储在主存中指令的引擎。处理器的核心是一个字长的存储设备(或寄存器)，称为 <strong>程序计数器(PC)</strong> 。任何时刻，PC都指向主存中的某条机器语言指令。  </li>
+<li><strong>ALU</strong><br>ALU即算数/逻辑单元。ALU的工作是计算新的数据和地址。  </li>
+<li><strong>寄存器文件</strong><br>寄存器文件是一个小的内存设备，由一些字长为1的寄存器组成，每个寄存器都有唯一的名字。  </li>
+</ul>
+<p>CPU在指令的要求下，可能会执行以下操作：   </p>
+<ul>
+<li><em>加载</em> ：把一个字节或者一个字，从主存复制到寄存器，以覆盖寄存器原来的内容。  </li>
+<li><em>存储</em> ：把一个字节或者一个字，从寄存器复制到主存的某个位置，以覆盖主存原来的内容。  </li>
+<li><em>操作</em> ：把两个寄存器的内容复制到ALU，ALU对这两个字做算数操作，并将结果存放在一个寄存器中，以覆盖这个寄存器原来的内容。  </li>
+<li><em>跳转</em> ：从指令本身抽取一个字，并将这个字复制到程序计数器(PC)中，以覆盖原来PC中的内容。  </li>
+</ul>
+<h3 id="运行hello程序的过程发生了什么"><a href="#运行hello程序的过程发生了什么" class="headerlink" title="运行hello程序的过程发生了什么"></a>运行hello程序的过程发生了什么</h3><p>我们回到shell输入”./hello”这个步骤。<br>“./hello”这个字符串是我们从I/O设备——键盘——输入的。shell首先将字符逐一读入到寄存器，然后将他们放到存储器中。这一过程如下图：<br><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_2.png" alt="第一步"><br>绿色的”1”号线路是从键盘的输入字符读取到寄存器；<br>粉色的”2”号线是从寄存器的字符放到主存的过程，此时主存存有”hello”这个字符串。  </p>
+<p>当我们在键盘上敲击”enter”键时，shell就知道我们已经结束了命令的输入。然后shell会运行一系列指令来加载我们的可执行文件”hello”，然后将”hello”可执行目标文件中的代码和数据从磁盘复制到主存，这里的数据包括屏幕将要输出的”hello, world\n”字符串。这个过程如下图：<br><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_3.png" alt="第二步"><br>红色的”3”号线是从磁盘复制程序和数据到主存的过程，此时主存含有hello程序和”hello, world\n”字符串。  </p>
+<p>一旦目标文件hello的代码和数据被加载到主存，CPU就开始执行hello程序的main程序中的机器语言指令，这些指令将”hello, world\n”字符串中的字节，从主存复制到寄存器文件，再将寄存器文件中复制到显示设备，最终显示到屏幕上。这个过程如下图：<br><img src="https://github.com/StupidL/StupidL.github.io/blob/master/images/Hello/hello_sys2_4.png" alt="第三步"><br>紫色的”4”号线是主存中的指令加载到寄存器文件；<br>灰色的”5”号线是将寄存器文件中的内容复制到显示设备，最终打印到屏幕上。  </p>
+<p>这样，我们的整个”hello world”程序就结束了。以上使用的计算机模型只是最基本的模型，写现在的计算机更加高级和复杂，但是基本过程是差不多的。这里就不展开了(毕竟能力有限)。<br>希望本文对你有所帮助。<br>如发现有错误的地方，还望指正。<br>邮箱: luozhouyang0528@gmail.com 欢迎交流！  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/10/10/Hello_World/" data-id="ciu72ndq0000cb20w5zq03t7z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/10/Callback/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android中的回调举例分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/计算机系统/" style="font-size: 10px;">计算机系统</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/10/Hello_World/">当我们编写并运行“Hello World”的时候，电脑到底发生了什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/10/Callback/">Android中的回调举例分析</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/02/Android_MVP/">Android MVP模式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/21/ZhiHuColumn_API/">知乎专栏最新API</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/30/Java_Interface/">Java Interface</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 StupidL<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

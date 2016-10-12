@@ -64,6 +64,112 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-BaseAdapter with ViewHoler" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/26/BaseAdapter with ViewHoler/" class="article-date">
+  <time datetime="2016-06-26T10:10:30.000Z" itemprop="datePublished">2016-06-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/26/BaseAdapter with ViewHoler/">BaseAdapter中使用ViewHolder</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>BaseAdapter在Android开发中用的很多，尤其是在给ListView做适配器的时候。<br>当ListView中含有许多项目的时候，Android系统会有一个缓存策略，而ViewHolder就是充分利用缓存以提高性能的典型。<br>在如今流行的RecyclerView中也可以看到它。那么在BaseAdapter如何使用ViewHolder呢?<br><em>Talk is cheap, show me the code</em>  </p>
+<h2 id="不使用ViewHolder的例子："><a href="#不使用ViewHolder的例子：" class="headerlink" title="不使用ViewHolder的例子："></a>不使用ViewHolder的例子：</h2><pre><code class="bash">private class MyAdapter extends BaseAdapter{
+    private List&lt;Map&lt;String, String&gt;&gt; items;
+    public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
+        this.items = list;
+    }
+    @Override
+    public int <span class="function"><span class="title">getCount</span></span>() {
+        <span class="built_in">return</span> items.size();
+    }
+    @Override
+    public Object getItem(int i) {
+        <span class="built_in">return</span> items.get(i);
+    }
+    @Override
+    public long getItemId(int i) {
+        <span class="built_in">return</span> i;
+    }
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        view  = getLayoutInflater.inflate(R.layout.item,null);
+        TextView text = (TextView) view.findViewById(R.id.text);
+        Button button = (Button) view.findViewById(R.id.button);
+        text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+        button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
+        <span class="built_in">return</span> view;
+    }
+}
+</code></pre>
+<h2 id="使用ViewHolder的例子："><a href="#使用ViewHolder的例子：" class="headerlink" title="使用ViewHolder的例子："></a>使用ViewHolder的例子：</h2><pre><code class="bash">private class MyAdapter extends BaseAdapter{
+    private List&lt;Map&lt;String, String&gt;&gt; items;
+    public MyAdapter(List&lt;Map&lt;String, String&gt;&gt; list){
+            this.items = list;
+    }
+    @Override
+    public int <span class="function"><span class="title">getCount</span></span>() {
+        <span class="built_in">return</span> items.size();
+    }
+    @Override
+    public Object getItem(int i) {
+        <span class="built_in">return</span> items.get(i);
+    }
+    @Override
+    public long getItemId(int i) {
+        <span class="built_in">return</span> i;
+    }
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        ViewHolder viewHolder = new ViewHolder();
+        <span class="keyword">if</span>(view == null){
+            view  = getLayoutInflater.inflate(R.layout.item,null);
+            viewHolder.text = (TextView) view.findViewById(R.id.text);
+            viewHolder.button = (Button) view.findViewById(R.id.button);
+            view.setTag(viewholder);
+        }<span class="keyword">else</span>{
+            viewHolder = view.getTag();
+        }
+        viewHolder.text.setText(<span class="string">"我是第"</span>+position+<span class="string">"项"</span>);
+        viewHolder.button.setText(<span class="string">"我是第"</span>+position+<span class="string">"个按钮"</span>);
+        <span class="built_in">return</span> view;
+        }
+    private final class ViewHolder{
+        public TextView text;
+        public Button button;
+    }
+}
+</code></pre>
+<p>就是这么简单！希望能对初学者有点帮助！<br>本人学识疏浅，错误之处请帮忙指出，不胜感激！<br>email: luozhouyang0528@gmail.com</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/06/26/BaseAdapter with ViewHoler/" data-id="ciu72ndor0000b20wefwf1upw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vim-with-markdown" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/26/vim-with-markdown/" class="article-date">
@@ -101,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/vim-with-markdown/" data-id="ciu4weixg000lla0w5gzvkyzr" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/vim-with-markdown/" data-id="ciu72ndqk000nb20wrm3cvik7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
@@ -148,7 +254,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/hello-world/" data-id="ciu4weixa000hla0w4hbxgs5s" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/26/hello-world/" data-id="ciu72ndqg000lb20w7vig5xi4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +280,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
     </div>
   </div>
 
@@ -184,7 +290,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+      <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/计算机系统/" style="font-size: 10px;">计算机系统</a>
     </div>
   </div>
 
@@ -206,6 +312,10 @@
       <ul>
         
           <li>
+            <a href="/2016/10/10/Hello_World/">当我们编写并运行“Hello World”的时候，电脑到底发生了什么？</a>
+          </li>
+        
+          <li>
             <a href="/2016/10/10/Callback/">Android中的回调举例分析</a>
           </li>
         
@@ -219,10 +329,6 @@
         
           <li>
             <a href="/2016/07/30/Java_Interface/">Java Interface</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/02/regular_expressions/">Java正则表达式</a>
           </li>
         
       </ul>
