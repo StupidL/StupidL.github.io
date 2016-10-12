@@ -19,12 +19,12 @@
 保存上述文件为“hello.">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_gcc.png">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_compile.png">
-<meta property="og:image" content="http://stupidme.me/images/hello_run.png">
+<meta property="og:image" content="http://stupidme.me/images/Hello/hello_run.png">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_sys2.png">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_sys2_2.png">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_sys2_3.png">
 <meta property="og:image" content="http://stupidme.me/images/Hello/hello_sys2_4.png">
-<meta property="og:updated_time" content="2016-10-12T15:34:30.528Z">
+<meta property="og:updated_time" content="2016-10-12T15:36:06.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="当我们编写并运行“Hello World”的时候，电脑到底发生了什么？">
 <meta name="twitter:description" content="本文是笔者在阅读CSAPP（《深入理解计算机系统》）一书时整理出来的。希望对大家有所帮助。
@@ -293,7 +293,7 @@
 <li>理解链接时出现的错误  </li>
 <li>避免安全漏洞</li>
 </ul>
-<h2 id="计算机执行程序"><a href="#计算机执行程序" class="headerlink" title="计算机执行程序"></a>计算机执行程序</h2><p>这是最复杂的一个步骤，也是最精秒的一个步骤。 我们首先看看我们的程序执行的结果是什么：<br><img src="/images/hello_run.png" alt="run"></p>
+<h2 id="计算机执行程序"><a href="#计算机执行程序" class="headerlink" title="计算机执行程序"></a>计算机执行程序</h2><p>这是最复杂的一个步骤，也是最精秒的一个步骤。 我们首先看看我们的程序执行的结果是什么：<br><img src="/images/Hello/hello_run.png" alt="run"></p>
 <p>很简单，就是在shell(一个命令行解释器)中输入”./hello”，然后shell会判断这个命令第一个单词是否是内置的命令，如果不是，shell会假设这是一个可执行文件的名字，并且将它加载、运行，同时将结果显示在屏幕上。结束这个程序后，shell会输出新的提示符，等待下一条命令。<br>要了解这一过程中，计算机到底做了什么，首先我们要了解计算机的硬件组成。</p>
 <h3 id="系统的硬件组成"><a href="#系统的硬件组成" class="headerlink" title="系统的硬件组成"></a>系统的硬件组成</h3><p>重新画了一张书上的图片：<br><img src="/images/Hello/hello_sys2.png" alt="hardware"><br>简单介绍一下上述几个概念：  </p>
 <ul>
