@@ -64,6 +64,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-MySQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/27/MySQL/" class="article-date">
+  <time datetime="2016-11-27T11:43:30.000Z" itemprop="datePublished">2016-11-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/27/MySQL/">MySQL快速入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式如下：  </span><br><span class="line">mysql&gt; CREATE TABLE table_name(attr_name attr_<span class="built_in">type</span> [constraint condition],...);  </span><br><span class="line">举例：  </span><br><span class="line">mysql&gt; CREATE TABLE student(_id INTEGER PRIMARY KEY, </span><br><span class="line">                            student_id INT(10), </span><br><span class="line">                            course_id INT(10));</span><br></pre></td></tr></table></figure>
+<p>执行语句，查看效果如下：  </p>
+<p><img src="/images/MySQL/mysql_create_table_student.png" alt="create_table_student">    </p>
+<h2 id="创建主键"><a href="#创建主键" class="headerlink" title="创建主键"></a>创建主键</h2><p>创建<strong>student</strong>表的时候，属性<strong>_id</strong>设置了约束条件<strong>PRIMARY KEY</strong>，这就是<strong>主键</strong>。<br>但是上面是指指定了一个主键，创建多个主键可以这样：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student2(_id INT, </span><br><span class="line">                            student_id INT(10), </span><br><span class="line">                            course_id INT(10),</span><br><span class="line">                            PRIMARY KEY(_id,student_id));</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/create_table_student2.png" alt="create_table_student2">  </p>
+<h2 id="设置外键"><a href="#设置外键" class="headerlink" title="设置外键"></a>设置外键</h2><p>设置外键的原则就是：必须依赖于数据库中已存在父表的主键，外键可以为空值，外键的作用是建立该表与父表的联系。  </p>
+<p>设置外键示例如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student3(_id INT PRIMARY KEY,</span><br><span class="line">                            student_id INT(10),</span><br><span class="line">                            course_id INT(10),</span><br><span class="line">                            CONSTRAINT fk FOREIGN KEY(_id, student_id)</span><br><span class="line">                            REFERENCES student2(_id, student_id));</span><br></pre></td></tr></table></figure></p>
+<p>效果如下图：<br><img src="/images/MySQL/create_table_student3.png" alt="create_table_student3">  </p>
+<h2 id="设置非空约束"><a href="#设置非空约束" class="headerlink" title="设置非空约束"></a>设置非空约束</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student4(_id INT NOT NULL PRIMARY KEY,</span><br><span class="line">                            student_id INT(10) NOT NULL,</span><br><span class="line">                            course_id INT(10) NOT NULL);</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/mysql_create_table_student4.png" alt="create_table_student4">  </p>
+<h2 id="设置唯一约束"><a href="#设置唯一约束" class="headerlink" title="设置唯一约束"></a>设置唯一约束</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student5(_id INT PRIMARY KEY,</span><br><span class="line">                            student_id INT(10) UNIQUE,</span><br><span class="line">                            course_id INT(10));</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/mysql_create_table_student5.png" alt="create_table_student5">  </p>
+<h2 id="设置自增长属性"><a href="#设置自增长属性" class="headerlink" title="设置自增长属性"></a>设置自增长属性</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student6(_id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">                            student_id INT(10),</span><br><span class="line">                            course_id INT(10));</span><br></pre></td></tr></table></figure>
+<p>设置属性自增长之后，该属性无需插入 <strong>_id</strong> ，并且每插入一条数据的时候自动增加1。<br>效果如下：<br><img src="/images/MySQL/mysql_create_table_student6.png" alt="create_table_student6">  </p>
+<h2 id="设置默认属性"><a href="#设置默认属性" class="headerlink" title="设置默认属性"></a>设置默认属性</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student7(_id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">                            student_id INT(10) UNIQUE,</span><br><span class="line">                            name VARCHAR(10) NOT NULL,</span><br><span class="line">                            english VARCHAR(10) DEFAULT <span class="string">'zero'</span>,</span><br><span class="line">                            math FLOAT DEFAULT 0.);</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/mysql_create_table_student7.png" alt="create_table_student7">  </p>
+<h2 id="查看表的基本结构"><a href="#查看表的基本结构" class="headerlink" title="查看表的基本结构"></a>查看表的基本结构</h2><p>上面所有的效果截图都是使用<strong>DESCRIBE</strong>命令得到的。查看一个表的结构只需要：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESCRIBE table_name;</span><br></pre></td></tr></table></figure>
+<h2 id="查看表的详细结构"><a href="#查看表的详细结构" class="headerlink" title="查看表的详细结构"></a>查看表的详细结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW CREATE TABLE table_name;</span><br></pre></td></tr></table></figure>
+<p>比如查看表<strong>student7</strong>的结果如下：<br><img src="/images/MySQL/mysql_show_table_student7.png" alt="show_table_student7">  </p>
+<h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><h2 id="修改表名"><a href="#修改表名" class="headerlink" title="修改表名"></a>修改表名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">格式为：  </span><br><span class="line">ALTER TABLE old_name RENAME [TO] new_name;  </span><br><span class="line">举例：  </span><br><span class="line">mysql&gt; ALTER TABLE student RENAME student1;</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/mysql_rename_table_student.png" alt="rename_table_student_before"><br><img src="/images/MySQL/mysql_rename_table_student1.png" alt="rename_table_student1">  </p>
+<h2 id="修改字段的类型"><a href="#修改字段的类型" class="headerlink" title="修改字段的类型"></a>修改字段的类型</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">格式：  </span><br><span class="line">ALTER TABLE table_name MODIFY attr_name attr_<span class="built_in">type</span>_new;  </span><br><span class="line">举例：  </span><br><span class="line">mysql&gt; ALTER TABLE student1 MODIFY course_id VARCHAR(10);</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="/images/MySQL/mysql_modify_table_student1.png" alt="modify_table_student1">  </p>
+<h2 id="修改字段名"><a href="#修改字段名" class="headerlink" title="修改字段名"></a>修改字段名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">格式：  </span><br><span class="line">ALTER TABLE table_name CHANGE attr_name_old attr_name_new attr_<span class="built_in">type</span>_new;  </span><br><span class="line">举例：  </span><br><span class="line">mysql&gt; ALTER TABLE student1 CHANGE course_id course_id_new INT(10);</span><br></pre></td></tr></table></figure>
+<p>效果如下图：<br><img src="/images/MySQL/mysql_change_table_student1.png" alt="change_table_student1">  </p>
+<hr>
+<p>未完待续…</p>
+<h1 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h1><p>未完待续…</p>
+<h1 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h1><p>未完待续…</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stupidme.me/2016/11/27/MySQL/" data-id="ciw0ulaeb000afr0wnq9sk4fa" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hello_World" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/10/Hello_World/" class="article-date">
@@ -303,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/10/Hello_World/" data-id="ciu72ndq0000cb20w5zq03t7z" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/10/Hello_World/" data-id="ciw0ulae30006fr0weiabz13t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
@@ -444,7 +513,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/10/Callback/" data-id="ciu72ndpd0003b20w7fmb2y3l" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/10/Callback/" data-id="ciw0ulae10004fr0w6oc1jzqy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -637,7 +706,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="ciu72ndp10001b20w2r6rpy2y" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="ciw0uladh0000fr0wk3pleo4l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -1207,7 +1276,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="ciu72ndqa000hb20wngorhe3s" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="ciw0ulaf1000lfr0wo0biglwo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -1332,7 +1401,7 @@ interface D extends A, C{}
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="ciu72ndpq0008b20w0cugjw7n" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="ciw0ulaeo000efr0w9g8343he" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1483,12 +1552,12 @@ interface D extends A, C{}
 <li>搜索</li>
 </ul>
 <hr>
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#108;&#x75;&#111;&#122;&#x68;&#111;&#x75;&#121;&#97;&#110;&#103;&#48;&#x35;&#50;&#x38;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#108;&#x75;&#111;&#122;&#x68;&#111;&#x75;&#121;&#97;&#110;&#103;&#48;&#x35;&#50;&#x38;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>  </p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#108;&#117;&#x6f;&#x7a;&#x68;&#111;&#117;&#121;&#x61;&#x6e;&#103;&#x30;&#53;&#50;&#56;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#108;&#117;&#x6f;&#x7a;&#x68;&#111;&#117;&#121;&#x61;&#x6e;&#103;&#x30;&#53;&#50;&#56;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="ciu72ndqd000ib20wcmnsbo17" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="ciw0ulaev000jfr0wqi7nxjzp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1531,7 +1600,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="ciu72ndq6000eb20wk23uv7vd" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="ciw0ulaer000hfr0w72wrd6kt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1601,7 +1670,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="ciu72ndpm0006b20w1hkngxdb" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="ciw0ulae70008fr0w78tolfcj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
@@ -1685,103 +1754,10 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="ciu72ndpi0004b20w1xyl3vl5" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="ciw0uladz0003fr0w6d489ajr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Handler" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/26/Handler/" class="article-date">
-  <time datetime="2016-06-26T13:25:30.000Z" itemprop="datePublished">2016-06-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/26/Handler/">Android Handler</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Handler、MessageQueue和Looper的概念"><a href="#Handler、MessageQueue和Looper的概念" class="headerlink" title="Handler、MessageQueue和Looper的概念"></a>Handler、MessageQueue和Looper的概念</h2><hr>
-<p>Handler是Android的消息机制，其运行需要底层的MessageQueue和Looper支撑。MessageQueue即消息队列，但是它的内部存储结构并不是队列，而是采用的单链表。当然，在开发过程中，你可以创建自己的消息处理框架，比如自己实现一个MessageQueue。Looper即消息循环。MessageQueue只是一个存储消息的单元，它并不会处理消息。消息处理由Looper提供，它会无线循环的查找是否有新消息，如果有则处理，否则一致检查。值得注意的是，Looper之中还有一个ThreadLocal，这不是一个线程，它的作用是可以在每个线程中存储数据。ThreadLooper可以获取每个线程的Looper。<br>当我们新建一个线程时，默认是没有Looper的，如果要使用Handler，则必须为该线程创建Looper。我们熟悉的主线程为什么就可以直接使用Hanlder呢？其原因是：主线程（UI线程）即ActivityThread被创建的时候就初始化了Looper！  </p>
-<h2 id="Handler、MessageQueue和Looper的关系"><a href="#Handler、MessageQueue和Looper的关系" class="headerlink" title="Handler、MessageQueue和Looper的关系"></a>Handler、MessageQueue和Looper的关系</h2><hr>
-<p>以下两张图可以很清除的看出他们三者之间的关系，以及整个消息机制是如何运行的。  </p>
-<h3 id="延伸：为什么Android不允许在子线程访问UI"><a href="#延伸：为什么Android不允许在子线程访问UI" class="headerlink" title="延伸：为什么Android不允许在子线程访问UI"></a>延伸：为什么Android不允许在子线程访问UI</h3><hr>
-<p>这是因为Android的UI线程不是线程安全的！当多线程并发访问的时候，可能会导致UI控件处于不可预期的状态。但是，我们可以给UI控件上锁啊，这样不就可以解决这个问题吗？答案是：锁机制会让UI访问的逻辑变得复杂，会影响UI的访问效率，因为锁机制会阻塞某些线程的执行。<br>所以，在子线程上，如果想要更新控件，不能直接像主线程那样，你应该在子线程，通过Handler发送一个消息到主线程，通知主线程来完成这个操作。  </p>
-<h2 id="ThreadLocal的工作原理"><a href="#ThreadLocal的工作原理" class="headerlink" title="ThreadLocal的工作原理"></a>ThreadLocal的工作原理</h2><hr>
-<p>ThreadLocal是一个线程内部的数据存储类，通过它可以在指定的线程之中存储数据，数据存储以后，只有在指定的线程中可以获取数据，其他线程则无法获取。<br>ThreadLocal的奇妙之处是：虽然不同线程访问的是同一个ThreadLocal对象，但是该对像的值却是不同的！<br>看下面的例子：  </p>
-<pre><code class="bash">private ThreadLocal&lt;Boolean&gt; mThreadLocal = new ThreadLocal&lt;Boolean&gt;();
-mThreadLocal.set(<span class="literal">true</span>);
-Log.d(<span class="string">"MainThread"</span>,<span class="string">"MainThread.mThreadLocal = "</span> + mThreadLocal.get());
-new Thread(<span class="string">"Thread_1"</span>){
-    @Override
-    public void <span class="function"><span class="title">run</span></span>(){
-        mThreadLocal.set(<span class="literal">false</span>);
-        Log.d(<span class="string">"Thread_1"</span>,<span class="string">"Thread_1.mThreadLocal = "</span> + mThreadLocal.get()); 
-    };
-}.start();
-new Thread(<span class="string">"Thread_2"</span>){
-    @Override
-    public void <span class="function"><span class="title">run</span></span>(){
-        Log.d(<span class="string">"Tnread_2"</span>,<span class="string">"Thread_2.mThreadLocal = "</span> + mThreadLocal.get());
-    };
-}.start();
-</code></pre>
-<p>运行上面的代码，可以得到一下结果： </p>
-<pre><code class="bash">MainThread.mThreadLocal = <span class="literal">true</span>
-Thread_1.mThreadLocal = <span class="literal">false</span>
-Thread_2.mThreadLocal = null
-</code></pre>
-<p>是不是感觉很神奇？！<br>ThreadLocal的set方法，是通过Values对象来获取当前线程中的ThreadLocal数据，Thread对象的内部有一个ThreadLocal.Values对象localValues，把数据存储在localValues对象的内部数组table中，即实现set方法。同样的，对于ThreadLocal的get方法，也是先取出当前线程的localValues这个对象，接着取出其table数组的数据，即实现了get方法。<br>可以看出，set\get方法都是操作当前线程的localValues对象的table数组，所以不同线程取出的值是不一样的。也就是说，ThreadLocal可以在不同线程之间互不干扰的存储和修改数据。  </p>
-<h2 id="MessageQueue的工作原理"><a href="#MessageQueue的工作原理" class="headerlink" title="MessageQueue的工作原理"></a>MessageQueue的工作原理</h2><hr>
-<p>MessageQueue主要包含两个操作：插入和读取。读取操作会伴随着删除。插入消息到队列使用enqueueMessage方法，读取使用next方法，读取一条消息并将其从消息队列中删除。enqueueMessage方法主要就是单链表的插入操作，而next方法是一个无线循环的方法，如果队列中没有消息，则阻塞，当有消息到来时，next方法会返回这条消息并且将其从单链表中移除。  </p>
-<h2 id="Looper的工作原理"><a href="#Looper的工作原理" class="headerlink" title="Looper的工作原理"></a>Looper的工作原理</h2><hr>
-<p>Looper就是不停的查看MessageQueue中是否有新消息，有消息就立刻处理，无消息则阻塞。Looper的构造方法中会新创建一个MessageQueue对象，然后获得当前线程的对象。如何为当前线程创建Looper对象呢？直接调用Looper.prepare()方法即可。接着，调用Looper.loop()方法开启循环。对于主线程，Looper提供了专门的preoareMainLooper方法，其本质也是prepare实现的。主线程的Looper比较特殊，Looper提供了getMainLooper方法，可以在任何地方获取主线程的Looper对象。Looper退出有两种，一种是quit，一种是quitSafely。在线程中手动创建了Looper的话，应该在不需要的时候推出Looper，否则线程一直处于等待状态。<br>Looper的loop方法是一个死循环，唯一跳出循环的条件是MessageQueue的next方法返回了null。Looper处理消息是通过发送消息的哪个Hanlder对象实现的,即msg.target.diapatchMessage(msg)方法,msg.target就是发送这条消息的Handler对象。所以，Handler给MessageQueue发送消息，被Looper检测到，又交给Handler自身去执行了！只不过，handler的diapatchMessage方法是在创建Handler对象的线程里面执行的！  </p>
-<h2 id="Handler的工作原理"><a href="#Handler的工作原理" class="headerlink" title="Handler的工作原理"></a>Handler的工作原理</h2><hr>
-<p>Handler的主要工作就是发送消息和接收并处理消息。消息的发送通过post的一系列方法和send的一系列方法实现，而post的一系列方法是通过send的一系列方法实现的。Handler发送消息的过程仅仅是向消息队列插入一条消息，MessageQueue的next方法返回这个消息给Looper，Looper接着交给Handler对象处理，Handler通过dispatchMessage方法处理该消息，该方法的实现如下：  </p>
-<pre><code class="bash">public void dispatchMessage(Message msg){
-    <span class="keyword">if</span>(msg.callback != null){handleCallback(msg);}
-    <span class="keyword">else</span>{
-        <span class="keyword">if</span>(mCallback != null){
-            <span class="keyword">if</span>(mCallback.handleMessage(msg)){<span class="built_in">return</span>;}
-        }
-        handleMessage(msg);
-    }
-}
-</code></pre>
-<p>Message的callback是一个Runnable对象，实际上就是Handler的post方法所传递的Runnable参数。handleCallbck很简单，就是运行这个Runnable对象msg.callback。<br>mCallback是一个Callback类型的接口，其定义如下：  </p>
-<pre><code class="bash">public interface Callback{    public boolean handleMessage(Message msg);}
-</code></pre>
-<p>dispatchMessage方法首先判断mCallback是否为空，否则调用mCallback的handleMessage方法，为空则直接调用handleMessage方法。<br>Callback还有一个作用，那就是用来构造Handler对象，尤其是你的Handler不需要派生子类的时候。我们通常都是派生一个子类重写其handleMessage方法。如果不想派生子类，则通过new Handler(Callback callback)来构造Handler。<br>除此之外，Handler还有一个构造方法，即通过Looper对象：public Handler(Looper looper){}  </p>
-<h2 id="主线程的消息循环"><a href="#主线程的消息循环" class="headerlink" title="主线程的消息循环"></a>主线程的消息循环</h2><hr>
-<p>主线程的消息循环和子线程类似，只不过在主线程的入口方法main里面，是使用Looper.prepareMainLooper方法来创建主线程Looper和MessageQueue的。  </p>
-<hr>
-<p>本博客是读任玉刚老师《Android开发艺术探索》一书时一边读一边理解一边写出来的。若有不正确之处，请大家指出。<br>email: luozhouyang0528@gmail.com  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/26/Handler/" data-id="ciu72ndps0009b20wvlhatlw1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
 
     </footer>
   </div>
@@ -1806,7 +1782,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
     </div>
   </div>
 
@@ -1816,7 +1792,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/计算机系统/" style="font-size: 10px;">计算机系统</a>
+      <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/计算机系统/" style="font-size: 10px;">计算机系统</a>
     </div>
   </div>
 
@@ -1825,7 +1801,7 @@ Thread_2.mThreadLocal = null
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1836,6 +1812,10 @@ Thread_2.mThreadLocal = null
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/11/27/MySQL/">MySQL快速入门</a>
+          </li>
         
           <li>
             <a href="/2016/10/10/Hello_World/">当我们编写并运行“Hello World”的时候，电脑到底发生了什么？</a>
@@ -1851,10 +1831,6 @@ Thread_2.mThreadLocal = null
         
           <li>
             <a href="/2016/08/21/ZhiHuColumn_API/">知乎专栏最新API</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/30/Java_Interface/">Java Interface</a>
           </li>
         
       </ul>
