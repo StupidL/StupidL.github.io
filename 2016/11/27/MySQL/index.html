@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="StupidL's Blog">
 <meta property="og:description" content="创建创建表123456格式如下：  mysql&amp;gt; CREATE TABLE table_name(attr_name attr_type [constraint condition],...);  举例：  mysql&amp;gt; CREATE TABLE student(_id INTEGER PRIMARY KEY,                             student_i">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_create_table_student.png">
-<meta property="og:image" content="http://stupidme.me/images/MySQL/create_table_student2.png">
+<meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_create_table_student2.png">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_create_table_student3.png">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_create_table_student4.png">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_create_table_student5.png">
@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_rename_table_student1.png">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_modify_table_student1.png">
 <meta property="og:image" content="http://stupidme.me/images/MySQL/mysql_change_table_student1.png">
-<meta property="og:updated_time" content="2016-11-27T16:17:49.504Z">
+<meta property="og:updated_time" content="2016-11-27T16:20:04.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL快速入门">
 <meta name="twitter:description" content="创建创建表123456格式如下：  mysql&amp;gt; CREATE TABLE table_name(attr_name attr_type [constraint condition],...);  举例：  mysql&amp;gt; CREATE TABLE student(_id INTEGER PRIMARY KEY,                             student_i">
@@ -103,7 +103,7 @@
 <p><img src="/images/MySQL/mysql_create_table_student.png" alt="create_table_student">    </p>
 <h2 id="创建主键"><a href="#创建主键" class="headerlink" title="创建主键"></a>创建主键</h2><p>创建<strong>student</strong>表的时候，属性<strong>_id</strong>设置了约束条件<strong>PRIMARY KEY</strong>，这就是<strong>主键</strong>。<br>但是上面是指指定了一个主键，创建多个主键可以这样：  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student2(_id INT, </span><br><span class="line">                            student_id INT(10), </span><br><span class="line">                            course_id INT(10),</span><br><span class="line">                            PRIMARY KEY(_id,student_id));</span><br></pre></td></tr></table></figure>
-<p>效果如下：<br><img src="/images/MySQL/create_table_student2.png" alt="create_table_student2">  </p>
+<p>效果如下：<br><img src="/images/MySQL/mysql_create_table_student2.png" alt="create_table_student2">  </p>
 <h2 id="设置外键"><a href="#设置外键" class="headerlink" title="设置外键"></a>设置外键</h2><p>设置外键的原则就是：必须依赖于数据库中已存在父表的主键，外键可以为空值，外键的作用是建立该表与父表的联系。  </p>
 <p>设置外键示例如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student3(_id INT PRIMARY KEY,</span><br><span class="line">                            student_id INT(10),</span><br><span class="line">                            course_id INT(10),</span><br><span class="line">                            CONSTRAINT fk FOREIGN KEY(_id, student_id)</span><br><span class="line">                            REFERENCES student2(_id, student_id));</span><br></pre></td></tr></table></figure></p>
 <p>效果如下图：<br><img src="/images/MySQL/mysql_create_table_student3.png" alt="create_table_student3">  </p>
@@ -133,7 +133,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/11/27/MySQL/" data-id="ciw0um2e1000dgy0wxq6kqjf4" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/11/27/MySQL/" data-id="ciw0up40n000hre0w2qu7305z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
