@@ -94,7 +94,7 @@
 <p>效果如下：<br><img src="/images/MySQL/create_table_student2.png" alt="create_table_student2">  </p>
 <h2 id="设置外键"><a href="#设置外键" class="headerlink" title="设置外键"></a>设置外键</h2><p>设置外键的原则就是：必须依赖于数据库中已存在父表的主键，外键可以为空值，外键的作用是建立该表与父表的联系。  </p>
 <p>设置外键示例如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student3(_id INT PRIMARY KEY,</span><br><span class="line">                            student_id INT(10),</span><br><span class="line">                            course_id INT(10),</span><br><span class="line">                            CONSTRAINT fk FOREIGN KEY(_id, student_id)</span><br><span class="line">                            REFERENCES student2(_id, student_id));</span><br></pre></td></tr></table></figure></p>
-<p>效果如下图：<br><img src="/images/MySQL/create_table_student3.png" alt="create_table_student3">  </p>
+<p>效果如下图：<br><img src="/images/MySQL/mysql_create_table_student3.png" alt="create_table_student3">  </p>
 <h2 id="设置非空约束"><a href="#设置非空约束" class="headerlink" title="设置非空约束"></a>设置非空约束</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student4(_id INT NOT NULL PRIMARY KEY,</span><br><span class="line">                            student_id INT(10) NOT NULL,</span><br><span class="line">                            course_id INT(10) NOT NULL);</span><br></pre></td></tr></table></figure>
 <p>效果如下：<br><img src="/images/MySQL/mysql_create_table_student4.png" alt="create_table_student4">  </p>
 <h2 id="设置唯一约束"><a href="#设置唯一约束" class="headerlink" title="设置唯一约束"></a>设置唯一约束</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student5(_id INT PRIMARY KEY,</span><br><span class="line">                            student_id INT(10) UNIQUE,</span><br><span class="line">                            course_id INT(10));</span><br></pre></td></tr></table></figure>
@@ -121,7 +121,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/11/27/MySQL/" data-id="ciw0ulaeb000afr0wnq9sk4fa" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/11/27/MySQL/" data-id="ciw0um2e1000dgy0wxq6kqjf4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
@@ -372,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/10/Hello_World/" data-id="ciw0ulae30006fr0weiabz13t" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/10/Hello_World/" data-id="ciw0um2dk0008gy0wwjm0hbgl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机系统/">计算机系统</a></li></ul>
@@ -513,7 +513,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/10/Callback/" data-id="ciw0ulae10004fr0w6oc1jzqy" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/10/Callback/" data-id="ciw0um2db0003gy0wf2ao8n44" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -706,7 +706,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="ciw0uladh0000fr0wk3pleo4l" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/10/02/Android_MVP/" data-id="ciw0um2cr0000gy0w4pi6870s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -1276,7 +1276,7 @@ public void onSave(Map&lt;String, String&gt; map){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="ciw0ulaf1000lfr0wo0biglwo" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/08/21/ZhiHuColumn_API/" data-id="ciw0um2ed000hgy0wysm6ko76" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -1401,7 +1401,7 @@ interface D extends A, C{}
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="ciw0ulaeo000efr0w9g8343he" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/30/Java_Interface/" data-id="ciw0um2e9000ggy0w41z2ndn3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1552,12 +1552,12 @@ interface D extends A, C{}
 <li>搜索</li>
 </ul>
 <hr>
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#108;&#117;&#x6f;&#x7a;&#x68;&#111;&#117;&#121;&#x61;&#x6e;&#103;&#x30;&#53;&#50;&#56;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#108;&#117;&#x6f;&#x7a;&#x68;&#111;&#117;&#121;&#x61;&#x6e;&#103;&#x30;&#53;&#50;&#56;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>  </p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>Email：<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x6c;&#117;&#x6f;&#122;&#104;&#x6f;&#117;&#x79;&#x61;&#x6e;&#103;&#48;&#x35;&#x32;&#x38;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#109;">&#x6c;&#117;&#x6f;&#122;&#104;&#x6f;&#117;&#x79;&#x61;&#x6e;&#103;&#48;&#x35;&#x32;&#x38;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#109;</a>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="ciw0ulaev000jfr0wqi7nxjzp" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/07/02/regular_expressions/" data-id="ciw0um2el000lgy0wnhbrbghd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1600,7 +1600,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="ciw0ulaer000hfr0w72wrd6kt" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/30/Java_String_StringBuilder/" data-id="ciw0um2dt000cgy0w61zflv3d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -1670,7 +1670,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="ciw0ulae70008fr0w78tolfcj" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/29/GitBranch/" data-id="ciw0um2dd0004gy0w8mevab03" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
@@ -1754,7 +1754,7 @@ String s = &quot;abc&quot; + mango + &quot;def&quot; + 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="ciw0uladz0003fr0w6d489ajr" class="article-share-link">Share</a>
+      <a data-url="http://stupidme.me/2016/06/27/GitNotes/" data-id="ciw0um2dm0009gy0wtvf97ozw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
